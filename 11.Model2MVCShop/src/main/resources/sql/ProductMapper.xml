@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductMapper">
+ 	
+ 	
+	<resultMap id="productSelectMap" type="product">
+		
+		<result property="prodNo"		column="prod_no"				jdbcType="NUMERIC"/>
+		<result property="prodName"	column="prod_name"			jdbcType="VARCHAR"/>
+		<result property="prodDetail"	column="prod_detail"			jdbcType="VARCHAR"/>
+		<result property="manuDate"	column="manufacture_day"	jdbcType="VARCHAR"/>
+		<result property="price"			column="price"					jdbcType="NUMERIC"/>
+		<result property="fileName"		column="image_file"			jdbcType="VARCHAR"/>
+		<result property="regDate"		column="reg_date"			jdbcType="DATE"/>
+		<result property="proTranCode" column="TRAN_STATUS_CODE"  	jdbcType="VARCHAR"/>
+		<result property="stock"		column="stock"				jdbcType="NUMERIC"/>
+
+		
+		
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addProduct"		parameterType="product" >
+	 	INSERT
+		INTO product( prod_no, prod_name, prod_detail, manufacture_day, price, image_file, reg_date,stock ) 
+		VALUES	 (	seq_product_prod_no.NEXTVAL , #{prodName} , #{prodDetail:VARCHAR} ,  #{manuDate:VARCHAR} , 
+							#{price:NUMERIC} , #{fileName}, SYSDATE,#{stock} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
+		SELECT
+		prod_no, prod_name, prod_detail, manufacture_day, price, image_file, reg_date, stock  		
+		FROM product 
+		WHERE prod_no = #{value}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateProduct"	parameterType="product" >
+	   	UPDATE product
+	   	<set>
+	   		prod_name 	= #{prodName} ,
+			prod_detail	= #{prodDetail},
+			manufacture_day = #{manuDate} ,
+			price	=	#{price},
+			image_file	=	#{fileName},
+			stock = #{stock}
+	   	</set>
+	   	WHERE prod_no = #{prodNo}
+	 </update>
+	 
+	 <update	id="updateStock"	parameterType="product" >
+	   	UPDATE product
+	   	<set>
+		stock=#{stock}	
+	   	</set>
+	   	WHERE prod_no = #{prodNo}
+	 </update>
+		 
+	<!-- SQL : SELECT LIST -->
+	<select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, p.manufacture_day,p.image_file, t.tran_status_code,p.prod_detail,p.stock
+											FROM product p, transaction t
+											<where>
+												 p.prod_no= t.prod_no(+)
+												 <if test="searchCondition != null">
+													<if test="searchCondition ==0 and searchKeyword !='' ">
+										 				AND p.prod_no like '%${searchKeyword}%'
+													</if>
+													<if test="searchCondition ==1 and searchKeyword !='' ">
+										 				AND p.prod_name like '%${searchKeyword}%'
+													</if>
+													<if test ="searchCondition==2 and searchKeyword !='' ">
+														AND p.price like '%${searchKeyword}%'
+													</if>
+													</if>
+												</where>
+											ORDER BY p.prod_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	<!--  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.==>부등호 사용할거라면!!
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+				ex) <![CDATA[ select * from users where ~~~>100 ]]>
+				<와 같은 기호를 괄호인지 비교연산자인지 확인 되지 X 조건문은 태그로 감싸면 XX
+				인식 못함 따로해주세욤!
+		-->
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, p.manufacture_day, t.tran_status_code
+						FROM product p, transaction t
+							<where>
+							 p.prod_no= t.prod_no(+)
+							<if test="searchCondition != null">
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			AND p.prod_no like '%${searchKeyword}%'
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 			AND p.prod_name like '%${searchKeyword}%'
+								</if>
+								<if test="searchCondition==2 and searchKeyword!='' ">
+									AND p.price like '%${searchKeyword}%'
+								</if>
+							</if> 
+						</where>) countTable						
+	 </select>
+	 
+	 <select  id="getNewList"  parameterType="search"	resultMap="productSelectMap">
+		SELECT prod_no, prod_name, price, reg_date, manufacture_day, prod_detail, stock, image_file
+		FROM product 
+		<where>
+		SYSDATE -7 &lt; reg_date	 
+		</where>
+	 </select>
+	 
+	 	 <select  id="getTotalCount2"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT prod_no, prod_name, price, reg_date, manufacture_day, prod_detail, stock
+						FROM product 
+							<where>
+							SYSDATE -7 &lt; reg_date	 
+							</where>) countTable						
+	 </select>
+	 
+</mapper>

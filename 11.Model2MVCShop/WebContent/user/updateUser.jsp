@@ -41,7 +41,7 @@
 		//============= "수정"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
+			$( "button.btn.btn-success" ).on("click" , function() {
 				fncUpdateUser();
 			});
 		});	
@@ -106,7 +106,7 @@
 	<div class="container">
 	
 		<div class="page-header text-center">
-	       <h3 class=" text-info">회원정보수정</h3>
+	       <h3 class=" text-success">회원정보수정</h3>
 	       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
 	    </div>
 	    
@@ -180,12 +180,12 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+		      <button type="button" class="btn btn-success"  >수 &nbsp;정</button>
+			  <a class="btn btn-success btn" href="#" role="button">취 &nbsp;소</a>
 		    </div>
 		  </div>
 		</form>
-		<!-- form Start /////////////////////////////////////-->
+		<!-- form end /////////////////////////////////////-->
 	    
  	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->

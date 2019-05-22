@@ -37,10 +37,9 @@
 		
 		//============= 회원정보수정 Event  처리 =============	
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( "button" ).on("click" , function() {
-					self.location = "/user/updateUser?userId=${user.userId}"
-				});
+				 self.location = "/product/listProduct?menu=manage"
+			});
 		});
 		
 	</script>
@@ -57,55 +56,68 @@
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-success">회원정보조회</h3>
-	       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+	       <h3 class=" text-success">상품 상세 조회</h3>
 	    </div>
 	
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>아 이 디</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userId}</div>
+	  		<div class="col-xs-4 col-md-2"><strong>상품 번호</strong></div>
+			<div class="col-xs-8 col-md-4">${product.prodNo }</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userName}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>상품명</strong></div>
+			<div class="col-xs-8 col-md-4">${product.prodName }</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
-			<div class="col-xs-8 col-md-4">${user.addr}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>상품 이미지</strong></div>
+			<div class="col-xs-8 col-md-4"><img src="/images/uploadFiles/${product.fileName}"/></div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
-			<div class="col-xs-8 col-md-4">${ !empty user.phone ? user.phone : ''}	</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>상품 상세 정보</strong></div>
+			<div class="col-xs-8 col-md-4">${product.prodDetail }</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
-			<div class="col-xs-8 col-md-4">${user.email}</div>
+	  		<div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
+			<div class="col-xs-8 col-md-4">${product.manuDate }</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
-			<div class="col-xs-8 col-md-4">${user.regDate}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>가격</strong></div>
+			<div class="col-xs-8 col-md-4">${product.price }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>재고</strong></div>
+			<div class="col-xs-8 col-md-4">${product.stock }</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>등록일자</strong></div>
+			<div class="col-xs-8 col-md-4">${product.regDate}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-success">회원정보수정</button>
+	  			<button type="button" class="btn btn-success">확인</button>
 	  		</div>
 		</div>
 		

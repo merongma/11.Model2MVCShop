@@ -28,7 +28,7 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	
+
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -53,8 +53,13 @@
 			var pw=$("input[name='password']").val();
 			var pw_confirm=$("input[name='password2']").val();
 			var name=$("input[name='userName']").val();
+			var here=$("#here").text();
 			
 			
+			if( here !="사용가능" ){
+				alert("사용불가능한 아이디 입니다.");
+				return;
+			}
 			if(id == null || id.length <1){
 				alert("아이디는 반드시 입력하셔야 합니다.");
 				return;
@@ -142,14 +147,36 @@
 		 
 		//==>"ID중복확인" Event 처리 및 연결
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $("button.btn.btn-info").on("click" , function() {
-				popWin 
-				= window.open("/user/checkDuplication.jsp",
-											"popWin", 
-											"left=300,top=200,width=780,height=130,marginwidth=0,marginheight=0,"+
-											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
-			});
+		
+			 $("#userId").on("keyup", function() {
+					//alert($("#userId").val())
+					$.ajax({
+						url : "/user/json/checkDuplication",
+						method : "POST",
+						data : JSON.stringify({
+							userId : $("#userId").val()
+						}),
+						dataType : "json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json; charset=UTF-8"
+						},
+						success : function(JSONData, status) {
+							//alert("status : " + status);
+							//alert("JSONData.result : \n" + JSONData.result);
+
+							if (JSONData.result == true) {
+								$("#here").html("<h7>사용가능</h7>")
+							} else if (JSONData.result == false) {
+								$("#here").html("<h7>사용불가능</h7>")
+							}
+
+						}
+
+					});
+
+				});
+
 		});	
 
 	</script>		
@@ -167,9 +194,8 @@
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-	
-		<h1 class="bg-primary text-center">회 원 가 입</h1>
+	<div class="container">	
+		<h1 class="bg-success text-center">회 원 가 입</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
@@ -177,13 +203,10 @@
 		  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId" placeholder="중복확인하세요"  readonly>
-		       <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">입력전 중복확인 부터..</strong>
+		      <input type="text" class="form-control" id="userId" name="userId" placeholder="중복확인하세요"  >
+		       <span  id ="helpBlock" class="help-block">
+		      	<strong class="text-danger" id="here" name = "here">중복확인</strong>
 		      </span>
-		    </div>
-		    <div class="col-sm-3">
-		      <button type="button" class="btn btn-info">중복확인</button>
 		    </div>
 		  </div>
 		  
@@ -204,7 +227,7 @@
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="userName" name="userName" placeholder="회원이름">
+		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
 		    </div>
 		  </div>
 		  
@@ -254,8 +277,8 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		      <button type="button" class="btn btn-success"  >가 &nbsp;입</button>
+			  <a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
 		</form>
