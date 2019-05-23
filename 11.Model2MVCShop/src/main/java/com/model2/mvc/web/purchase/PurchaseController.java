@@ -219,6 +219,8 @@ public class PurchaseController {
 		System.out.println("/purchase/updateTranCode : GET");
 
 		purchase = purchaseService.getPurchase(tranNo);
+		int prodNo = purchase.getPurchaseProd().getProdNo();
+		System.out.println("prodNo값 확인 : "+prodNo);
 
 		product.setProdNo(purchase.getPurchaseProd().getProdNo());
 
@@ -226,6 +228,15 @@ public class PurchaseController {
 		purchase.setPurchaseProd(product);
 
 		purchaseService.updateTranCode(purchase);
+		
+		if (tranCode.equals("400")) {
+
+			System.out.println("여기 들어오나욤?");
+			product.setStock((productService.getProduct(prodNo)).getStock()
+					+ (purchaseService.getPurchase2(prodNo)).getQuantity());
+			productService.updateStock(product);
+
+		}
 
 		return "forward:/purchase/listPurchase?tranNo=" + tranNo;
 	}

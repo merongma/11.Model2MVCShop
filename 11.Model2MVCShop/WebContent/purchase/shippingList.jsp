@@ -53,67 +53,65 @@ function fncGetUserList(currentPage) {
 $(function() {
 	 
 	$( "td:nth-child(1)" ).on("click" , function() {
-		alert($(this).text())
+		//alert($(this).text())
 		self.location ="/purchase/getPurchase?tranNo="+$(this).text();
 	});
 	
 	$( "td:nth-child(2)" ).on("click" , function() {
-			self.location ="/user/getUser?userId="+$(this).children("input").val();
+			self.location ="/user/getUser?userId="+$(this).text();
 	});
 	
 	$( "td:nth-child(3)" ).on("click" , function() {
-		alert("여기");
-		
+		//alert("여기");
 		self.location ="/product/getProduct?menu=manage&prodNo="+$(this).children("input").val()
 	});
 	
-// 	$( "td:nth-child(3)" ).on("click" , function() {
-// 		var tranNo = $(this).children("input").val().trim();
-// 		$.ajax({
-// 			url : "/purchase/json/getPurchase/" + tranNo,
-// 			method : "GET",
-// 			dataType : "json",
-// 			headers : {
-// 				"Accept" : "application/json",
-// 				"Content-Type" : "application/json"
-// 			},
-// 			success : function(JSONData, status) {
+	$( "td:nth-child(7)" ).on("click" , function() {
+		var tranNo = $(this).children("input").val().trim();
+		$.ajax({
+			url : "/purchase/json/getPurchase/" + tranNo,
+			method : "GET",
+			dataType : "json",
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData, status) {
 
-// 				//alert(status);
-// 				//alert("JSONData : \n"+JSONData.tranNo);
+				//alert(status);
+				//alert("JSONData : \n"+JSONData.tranNo);
 
-// 				var displayValue = "<h3>" + 
-// 				"제품번호 : "+JSONData.purchaseProd.prodNo + "<br/>" +
-// 				"구매자 이름 : "+JSONData.purchaseProd.receiverName + "<br/>" +
-// 				"재고 : "+ JSONData.quantity + "<br/>" +
-// 				"구매자 연락처 : "+ JSONData.receiverPhone + "<br/>" +
-// 				"구매자 주소 : "+ JSONData.divyAddr + "<br/>" +
-// 				"구매 요청 사항: "+ JSONData.divyRequest + "<br/>" +
-// 				"배송희망일: "+ JSONData.divyDate + "<br/>" +
-// 				"주문일: "+ JSONData.orderDate + "<br/>" +
-// 				"상품이미지 : <img src=/images/uploadFiles/"+ JSONData.purchaseProd.fileName+ "/><br/>" 
-// 				"</h3>";
+				var displayValue = "<h6>" + 
+				"제품번호 : "+JSONData.purchaseProd.prodNo + "<br/>" +
+				"수령인 : "+JSONData.purchaseProd.receiverName + "<br/>" +
+				"연락처 : "+ JSONData.receiverPhone + "<br/>" +
+				"배송지 : "+ JSONData.divyAddr + "<br/>" +
+				"배송메모: "+ JSONData.divyRequest + "<br/>" +
+				"배송희망일: "+ JSONData.divyDate + "<br/>" +
+				"</h6>";
 
-// 				//alert(displayValue);
-// 				$("h3").remove();
-// 				$("#" + tranNo + "").html(displayValue);
-// 			}
-// 		});
-// 	});
+				//alert(displayValue);
+				$("h6").remove();
+				$("#" + tranNo + "").html(displayValue);
+			}
+		});
+	});
 	
 
-	$( "button.btn.btn-success:contains('주문취소')"  ).on("click" , function() {
+
+	$('#cancle').click(function () { 
+		alert("취소버튼.") 
 		alert($(this).children("input").val());
-		self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=400";
-	});
+		//self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=400";
+		});
+	$('#ship').click(function () { 
+		alert("배송버튼") 
+		alert($(this).children("input").val());
+		//self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=200";
+		});
+
 	
-	$( "button.btn.btn-success:contains('배송하기')"  ).on("click" , function() {
-		alert($(this).children("input").val() );
-		self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=200";
-	});
-
-
-
+	$(  "td:nth-child(6)" ).css("color" , "#5F04B4");
 });
 </script>
 
@@ -165,7 +163,8 @@ $(function() {
             <th align="left">주문내역</th>
             <th align="left">결제금액</th>
             <th align="left">배송현황</th>
-            <th align="left">업데이트</th>
+            <th align="left">상태수정</th>
+             <th align="left">간략정보</th>
           </tr>
         </thead>
        
@@ -178,7 +177,7 @@ $(function() {
 			  <td align="center">${purchase.tranNo}</td>
 			  <td align="left">${purchase.buyer.userId}</td>
 			  <td align="left"><img src="/images/uploadFiles/${purchase.purchaseProd.fileName}" width="66" height="66"/>
-			  &nbsp; &nbsp; ${purchase.purchaseProd.prodName}<input type="hidden" name="prodNo"  value="${purchase.purchaseProd.prodNo  }"/></td>
+			  &nbsp; &nbsp; ${purchase.purchaseProd.prodName}<input type="hidden"  value="${purchase.purchaseProd.prodNo  }"/></td>
 			  <td align="left">
 			  	<c:if test="${purchase.quantity>=1 }">${(purchase.purchaseProd.price)*(purchase.quantity)}</c:if>
 				<c:if test="${purchase.quantity==0 }">${purchase.purchaseProd.price}</c:if>원</td>
@@ -190,13 +189,15 @@ $(function() {
 			</td>
 			  	
 			  <td align="left">
-			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100'}">
-				<button type="button" class="btn btn-success btn-sm"><input type="hidden" name="prodNo" value="${purchase.purchaseProd.prodNo }" />주문취소</button></c:if>
-				<span>&nbsp; </span>
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
-				<button type="button" class="btn btn-success btn-sm"><input type="hidden" name="prodNo" value="${purchase.purchaseProd.prodNo }" />배송하기</button></c:if>
+			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
+			  		<div id="cancle"><input type="hidden" value="${purchase.purchaseProd.prodNo }" />주문취소</div></c:if>
+			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
+			  		<div id="ship"><input type="hidden"  value="${purchase.purchaseProd.prodNo }" />배송하기</div></c:if>
 			  </td>
-			  
+			 <td align="left">
+			  	<i class="glyphicon glyphicon-search" id= "${purchase.tranNo}"></i>
+			  	<input type="hidden" value="${purchase.tranNo}">
+			  </td>
 			</tr>
           </c:forEach>
         

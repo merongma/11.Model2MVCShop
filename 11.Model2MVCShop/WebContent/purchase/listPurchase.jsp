@@ -100,10 +100,39 @@
 			$(  "td:nth-child(6):contains('주문취소')" ).on("click" , function() {
 				alert("주문취소 클릭 OK")
 				alert($(this).children("input").val());
-				//self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=400";
+				self.location="/purchase/updateTranCode?tranNo="+$(this).children("input").val()+"&tranCode=400";
 		
 			});
-			
+			$( "td:nth-child(7)" ).on("click" , function() {
+				var tranNo = $(this).children("input").val().trim();
+				$.ajax({
+					url : "/purchase/json/getPurchase/" + tranNo,
+					method : "GET",
+					dataType : "json",
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+
+						//alert(status);
+						//alert("JSONData : \n"+JSONData.tranNo);
+
+						var displayValue = "<h6>" + 
+						"제품번호 : "+JSONData.purchaseProd.prodNo + "<br/>" +
+						"수령인 : "+JSONData.purchaseProd.receiverName + "<br/>" +
+						"연락처 : "+ JSONData.receiverPhone + "<br/>" +
+						"배송지 : "+ JSONData.divyAddr + "<br/>" +
+						"배송메모: "+ JSONData.divyRequest + "<br/>" +
+						"배송희망일: "+ JSONData.divyDate + "<br/>" +
+						"</h6>";
+
+						//alert(displayValue);
+						$("h6").remove();
+						$("#" + tranNo + "").html(displayValue);
+					}
+				});
+			});
 			//==> 아래와 같이 정의한 이유는 ??
 			$(  "td:nth-child(6)" ).css("color" , "#5F04B4");
 			
@@ -161,6 +190,7 @@
             <th align="left">결제금액</th>
             <th align="left">배송현황</th>
             <th align="left">상태수정</th>
+            <th align="left">간략정보</th>
           </tr>
         </thead>
        
@@ -188,6 +218,10 @@
 			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">주문취소</c:if>
 			  	<input type="hidden" name = "tranNo" value="${purchase.tranNo  }">
 			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='200'}">상품도착</c:if>
+			  </td>
+			  <td align="left">
+			  	<i class="glyphicon glyphicon-search" id= "${purchase.tranNo}"></i>
+			  	<input type="hidden" value="${purchase.tranNo}">
 			  </td>
 			</tr>
           </c:forEach>
