@@ -142,7 +142,7 @@ body {
 			<c:forEach var="product" items="${list}">
 				<div class="col-xs-6 col-md-4">
 					<a href="#" class="thumbnail"><input type="hidden" name="prodNo"value="${product.prodNo }" />
-					<img src="/images/uploadFiles/${product.fileName}" onError="this.src='/images/noimage'" alt="noimage"></a>
+					<img src="/images/uploadFiles/${product.fileName}" width="300" height="300" onError="this.src='/images/noimage'" alt="noimage"></a>
 					<div class="caption">
 						<h3>${product.prodName }</h3>
 						<h5>${product.price }¿ø</h5>
