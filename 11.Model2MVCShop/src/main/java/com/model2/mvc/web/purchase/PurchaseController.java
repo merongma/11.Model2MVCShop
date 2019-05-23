@@ -196,7 +196,7 @@ public class PurchaseController {
 		System.out.println("1" + purchase);
 		purchaseService.updateTranCode(purchase);
 
-		if (tranCode.equals("4")) {
+		if (tranCode.equals("400")) {
 
 			System.out.println("여기 들어오나욤?");
 			product.setStock((productService.getProduct(prodNo)).getStock()
@@ -212,12 +212,13 @@ public class PurchaseController {
 	}
 
 	@RequestMapping(value = "updateTranCode", method = RequestMethod.GET)
-	public String updateTranCode(@RequestParam("tranCode") String tranCode, @RequestParam("tranNo") int tranNo,
+	public String updateTranCode(@ModelAttribute("Purchase") Purchase purchase,
+			@RequestParam("tranCode") String tranCode, @RequestParam("tranNo") int tranNo,
 			@ModelAttribute("Product") Product product) throws Exception {
 
 		System.out.println("/purchase/updateTranCode : GET");
 
-		Purchase purchase = purchaseService.getPurchase(tranNo);
+		purchase = purchaseService.getPurchase(tranNo);
 
 		product.setProdNo(purchase.getPurchaseProd().getProdNo());
 

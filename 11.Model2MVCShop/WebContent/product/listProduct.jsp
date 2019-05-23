@@ -63,7 +63,7 @@ body {
 
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("a[href='#' ]").on("click", function() {
+		$(".thumbnail").on("click", function() {
 			//alert( $(this).children("input").val());
 			self.location = "/product/getProduct?prodNo="+ $(this).children("input").val()+ "&menu=${param.menu}";
 		});

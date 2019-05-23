@@ -78,7 +78,8 @@
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
 			$("a[href='#' ]").on("click", function() {
-				$("form")[0].reset();
+				alert("여기")
+				history.go(-1);
 			});
 		});
 		
@@ -152,7 +153,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-success"  >등 &nbsp;록</button>
-			  <a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
+			  <a class="btn btn-success btn" href="#" role="button">이&nbsp;전</a>
 		    </div>
 		  </div>
 		</form>

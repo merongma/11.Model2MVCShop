@@ -46,7 +46,7 @@
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+				history.go(-1);
 			});
 		});	
 

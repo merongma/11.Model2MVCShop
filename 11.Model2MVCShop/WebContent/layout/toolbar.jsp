@@ -58,6 +58,7 @@
 		                     <ul class="dropdown-menu">
 		                         <li><a href="#">魄概惑前殿废</a></li>
 		                         <li><a href="#">魄概惑前包府</a></li>
+		                         <li><a href="#">硅价包府</a></li>
 		                         <li class="divider"></li>
 		                         <li><a href="#">etc..</a></li>
 		                     </ul>
@@ -139,6 +140,12 @@
 	 		$(self.location).attr("href","/product/listProduct?menu=manage");
 		});
 
+		 	//=============  硅价包府 Event  贸府 =============	
+		 $( "a:contains('硅价包府')" ).on("click" , function() {
+	 		//==> DOM Object GET 3啊瘤 规过 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 self.location = "/purchase/shippingList?menu=manage"
+		});
+		 	
 		 //=============  惑 前 八 祸 Event  贸府 =============	
 		 $( "a:contains('惑 前 八 祸')" ).on("click" , function() {
 	 		//==> DOM Object GET 3啊瘤 规过 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -154,7 +161,8 @@
 		 //============= 弥辟夯惑前 Event  贸府 =============	
 		 $(function() {
 		 	$( "a:contains('弥辟夯惑前')" ).on("click" , function() {
-			 	history();
+		 		self.location = "/history.jsp"
+		 		//history();
 			});
 		});
 	</script>  
