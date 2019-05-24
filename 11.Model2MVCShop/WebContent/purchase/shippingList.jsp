@@ -99,15 +99,15 @@ $(function() {
 	
 
 
-	$('#cancle').click(function () { 
+	$('.cancle').click(function () { 
 		alert("취소버튼.") 
 		alert($(this).children("input").val());
-		//self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=400";
+		self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=400";
 		});
-	$('#ship').click(function () { 
+	$('.ship').click(function () { 
 		alert("배송버튼") 
 		alert($(this).children("input").val());
-		//self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=200";
+		self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=200";
 		});
 
 	
@@ -190,9 +190,9 @@ $(function() {
 			  	
 			  <td align="left">
 			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
-			  		<div id="cancle"><input type="hidden" value="${purchase.purchaseProd.prodNo }" />주문취소</div></c:if>
+			  		<div class="cancle"><input type="hidden" value="${purchase.purchaseProd.prodNo }" />주문취소</div></c:if>
 			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
-			  		<div id="ship"><input type="hidden"  value="${purchase.purchaseProd.prodNo }" />배송하기</div></c:if>
+			  		<div class="ship"><input type="hidden"  value="${purchase.purchaseProd.prodNo }" />배송하기</div></c:if>
 			  </td>
 			 <td align="left">
 			  	<i class="glyphicon glyphicon-search" id= "${purchase.tranNo}"></i>

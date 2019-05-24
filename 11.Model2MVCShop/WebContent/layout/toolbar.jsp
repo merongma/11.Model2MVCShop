@@ -78,6 +78,7 @@
 	                           <li><a href="#">구매이력조회</a></li>
 	                         </c:if>
 	                         
+	                         <li><a href="#">신상품보기</a></li>
 	                         <li><a href="#">최근본상품</a></li>
 	                         <li class="divider"></li>
 	                         <li><a href="#">etc..</a></li>
@@ -156,6 +157,12 @@
 		 $( "a:contains('구매이력조회')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	 		$(self.location).attr("href","/purchase/listPurchase");
+		});
+		 
+		 //============= 신상품보기 Event  처리 =============	
+		 $( "a:contains('신상품보기')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 self.location = "/product/listNew"
 		});
 		 
 		 //============= 최근본상품 Event  처리 =============	

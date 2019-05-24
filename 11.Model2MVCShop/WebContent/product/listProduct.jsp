@@ -55,10 +55,10 @@ body {
 
 	//============= "검색"  Event  처리 =============	
 	$(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		//$( "button.btn.btn-default" ).on("click" , function() {
-		fncGetUserList(1);
-		//});
+		$( "button.btn.btn-default" ).on("click" , function() {
+		//alert("버튼!!")
+		fncGetList(1);
+		});
 	});
 
 	$(function() {
@@ -117,8 +117,7 @@ body {
 
 					<div class="form-group">
 						<label class="sr-only" for="searchKeyword">검색어</label> <input
-							type="text" class="form-control" id="searchKeyword"
-							name="searchKeyword" placeholder="검색어"
+							type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="검색어"
 							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
 					</div>
 

@@ -168,7 +168,18 @@ body {
 
 	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
-
+	
+	<!--  리뷰 화면 div Start /////////////////////////////////////-->
+	
+	<div class="row">
+		<div class="col-md-6 text-right">
+			    <form class="form-inline" name="detailForm">
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>					  
+				</form>
+    	</div>
+		    	
+	</div>
 </body>
 
 </html>
