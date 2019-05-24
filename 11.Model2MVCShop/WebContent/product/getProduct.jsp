@@ -60,6 +60,14 @@ body {
 				//alert("이전버튼");
 				self.location = "/product/listProduct?menu=search"
 			});
+			$(function() {
+				$( "button.btn.btn-default" ).on("click" , function() {
+				alert("버튼!!")
+				alert(${product.prodNo})
+				self.location = "/review/addReview?prodNo=${product.prodNo}"
+				
+				});
+			});
 		});	
 
 </script>
@@ -167,19 +175,19 @@ body {
 
 
 	</div>
-	<!--  화면구성 div Start /////////////////////////////////////-->
+	<!--  화면구성 div end /////////////////////////////////////-->
+
+
+
+
+		<div class="form-group">
+				<hr />
+			<div class="col-sm-offset-4  col-sm-4 text-center">
+				<button type="button" class="btn btn-default">후기작성</button>
+			</div>
+		</div>
+
 	
-	<!--  리뷰 화면 div Start /////////////////////////////////////-->
-	
-	<div class="row">
-		<div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>					  
-				</form>
-    	</div>
-		    	
-	</div>
 </body>
 
 </html>
