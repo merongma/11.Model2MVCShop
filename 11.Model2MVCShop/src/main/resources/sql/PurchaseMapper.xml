@@ -47,6 +47,13 @@
 		WHERE prod_no = #{value}
   	</select>
   	
+  	 <select id="getPurchase3" parameterType="map" resultMap="purchaseSelectMap">
+  		SELECT 
+		prod_no, buyer_id, payment_option, receiver_name, receiver_phone, demailaddr, dlvy_request, dlvy_date, order_data, tran_status_code, tran_no,quantity
+		FROM transaction
+		WHERE buyer_id = #{value}
+  	</select>
+  	
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updatePurchase"	parameterType="purchase" >

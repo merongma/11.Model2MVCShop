@@ -37,16 +37,16 @@ body {
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-	
+//////////////////////구매버튼//////////////////////
 	$(function() {
+		var stock = ${product.stock }
 		if(${product.stock } !=0){
 			$( "button.btn.btn-success").on("click" , function() {
-				//alert("구매버튼");
+				alert(stock);
 		 		self.location = "/purchase/addPurchaseView?prodNo=${product.prodNo}"
 			});
 			
 		}else{
-			
 			$( "button.btn.btn-success").on("click" , function() {
 				alert("품절 상품 입니다!!!");
 		 		
@@ -54,21 +54,32 @@ body {
 			
 		}
 	});
-		
+///////////////////////////이전버튼///////////////////////		
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
 				//alert("이전버튼");
 				self.location = "/product/listProduct?menu=search"
 			});
-			$(function() {
-				$( "button.btn.btn-default" ).on("click" , function() {
-				alert("버튼!!")
-				alert(${product.prodNo})
-				self.location = "/review/addReview?prodNo=${product.prodNo}"
+		});
+		
+//////////////리뷰작성버튼////////////////////////////
+$(function() {
+				var tranNo =${purchase.tranNo}
+
+					$( "button.btn.btn-default" ).on("click" , function() {
+						if( tranNo == null  ){
+						alert("주문한 회원만 후기작성이 가능합니다!!");
+						return false;
+						}
+						alert("리뷰버튼!!")
+						alert(${product.prodNo});
+						alert(${purchase.tranNo});
+						self.location = "/review/addReview?prodNo=${product.prodNo}"
+					});
+			
 				
-				});
-			});
-		});	
+				
+});
 
 </script>
 <html>
@@ -187,6 +198,12 @@ body {
 			</div>
 		</div>
 
+
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/review/listReview.jsp" flush="false">
+			<jsp:param value="${product.prodNo}" name="prodNo"/>
+	</jsp:include>
+	<!-- ToolBar End /////////////////////////////////////-->
 	
 </body>
 

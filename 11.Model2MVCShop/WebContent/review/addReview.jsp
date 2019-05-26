@@ -31,18 +31,23 @@
 	//============= "등록"  Event 처리 및  연결 =============
 	$(function() {
 		$("button.btn.btn-success").on("click", function() {
-		self.location = "/list/addReview"	
+		alert("등록버튼")
+		fncAddReview();
 		});
 	});
 
 	//============= "취소"  Event 처리 및  연결 =============
 	$(function() {
 		$("a[href='#' ]").on("click", function() {
-			alert("여기")
+			alert("취소버튼")
 			history.go(-1);
 		});
 	});
 	
+	function fncAddReview() {
+		document.addReview.submit();
+		$("form").attr("method" , "POST").attr("action" , "/review/addReview").submit();
+	}	
 	</script>		
     
 </head>
@@ -54,7 +59,7 @@
 		<h1 class="bg-success text-center">REVIEW</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+		<form class="form-horizontal" name ="addReview">
 		
 		  <div class="form-group">
 		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명 </label>
@@ -64,7 +69,28 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">제목</label>
+		    <label for="prodNo" class="col-sm-offset-1 col-sm-3 control-label">상품번호 </label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodNo"  name = "prodNo" value="${product.prodNo }" readonly>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">작성자 </label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="userId" name ="userId" value="${user.userId }" readonly>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="tranNo" class="col-sm-offset-1 col-sm-3 control-label">주문번호 </label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id ="tranNo" name="tranNo"value="${purchase.tranNo }" readonly>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label for="reviewTitle" class="col-sm-offset-1 col-sm-3 control-label">제목</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="reviewTitle" name=reviewTitle >
 		    </div>
@@ -78,7 +104,7 @@
 		  </div>
 		  
 		 <div class="form-group">
-		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
+		    <label for="reviewFile" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
 		      <input type="file"  class="form-control" id="file" name="file" placeholder="이미지" >
 		    </div>

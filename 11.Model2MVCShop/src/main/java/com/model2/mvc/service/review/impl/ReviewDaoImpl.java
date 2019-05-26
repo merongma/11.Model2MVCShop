@@ -41,7 +41,7 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	@Override
-	public Map<String, Object> getReviewList(Search search, String prodNo) throws Exception {
+	public Map<String, Object> getReviewList(Search search, int prodNo) throws Exception {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		Review review = new Review();

@@ -39,7 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Map<String, Object> getReviewList(Search search, String prodNo) throws Exception {
+	public Map<String, Object> getReviewList(Search search, int prodNo) throws Exception {
 
 		int totalCount = reviewDao.getTotalCount(search);
 

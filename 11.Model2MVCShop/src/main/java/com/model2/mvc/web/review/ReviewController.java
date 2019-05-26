@@ -20,6 +20,7 @@ import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
+import com.model2.mvc.service.domain.Review;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.purchase.PurchaseService;
@@ -64,18 +65,116 @@ public class ReviewController {
 	int pageSize;
 
 	@RequestMapping(value = "addReview", method = RequestMethod.GET)
-	public String addReview(@RequestParam("prodNo") int prodNo, Model model) throws Exception {
+	public String addReview(@RequestParam("prodNo") int prodNo, Model model, HttpServletRequest request)
+			throws Exception {
 
 		System.out.println("/review/addReview : GET");
 
 		Product product = productService.getProduct(prodNo);
 
-		model.addAttribute("product", product);
+		User user = (User) request.getSession().getAttribute("user");
+		String buyerId = user.getUserId();
 
-		System.out.println(product);
+		Purchase purchase = purchaseService.getPurchase2(prodNo);
+
+		model.addAttribute("product", product);
+		model.addAttribute("user", user);
+		model.addAttribute("purchase", purchase);
+
+		System.out.println(model);
 
 		return "forward:/review/addReview.jsp";
 	}
 
+	@RequestMapping(value = "addReview", method = RequestMethod.POST)
+	public String addReview(@ModelAttribute("review") Review review, @RequestParam("prodNo") int prodNo,
+			@RequestParam("tranNo") int tranNo, HttpServletRequest request) throws Exception {
 
+		System.out.println("/review/addReview : POST");
+
+		User user = (User) request.getSession().getAttribute("user");
+		Product product = productService.getProduct(prodNo);
+		Purchase purchase = purchaseService.getPurchase(tranNo);
+
+		review.setReUser(user);
+		review.setReProduct(product);
+		review.setRePurchase(purchase);
+
+		reviewService.addReview(review);
+
+		return "forward:/product/getProduct";
+	}
+
+	@RequestMapping(value = "getReview")
+	public String getReview(@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
+
+		System.out.println("/review/getReview : GET / POST");
+		
+		Review review = reviewService.getReview(reviewNo);
+
+		model.addAttribute("review",review);
+
+
+		return "forward:/purchase/getPurchaseView.jsp";
+
+	}
+
+//	@RequestMapping(value = "listReview")
+//	public String listReview(@ModelAttribute("search") Search search, Model model, HttpServletRequest request,
+//			@RequestParam("prodNo") int prodNo) throws Exception {
+//
+//		System.out.println("/review/listReview : GET / POST");
+//
+//		if (search.getCurrentPage() == 0) {
+//			search.setCurrentPage(1);
+//		}
+//		search.setPageSize(pageSize);
+//
+//		User user = (User) request.getSession().getAttribute("user");
+//		String buyerId = user.getUserId();
+//
+//		System.out.println("session buyerid : " + buyerId);
+//
+//		Map<String, Object> map = reviewService.getReviewList(search, prodNo);
+//
+//		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+//				pageSize);
+//		System.out.println(resultPage);
+//
+//		model.addAttribute("list", map.get("list"));
+//		model.addAttribute("resultPage", resultPage);
+//		model.addAttribute("search", search);
+//
+//		System.out.println("model :" + model);
+//
+//		return "forward:/review/listReview.jsp";
+//	}
+
+//	@RequestMapping(value = "updatePurchase", method = RequestMethod.POST)
+//	public String updatePurchase(@ModelAttribute("Purchase") Purchase purchase, @RequestParam("tranNo") int tranNo,
+//			Model model) throws Exception {
+//
+//		System.out.println("/purchase/updatePurchase : POST");
+//
+//		purchase.setTranNo(tranNo);
+//		purchaseService.updatePurchase(purchase);
+//
+//		model.addAttribute("purchase", purchase);
+//
+//		return "forward:/purchase/getPurchase";
+//	}
+//
+//	@RequestMapping(value = "updatePurchaseView", method = RequestMethod.GET)
+//	public String updatePurchaseView(@ModelAttribute("Purchase") Purchase purchase, @RequestParam("tranNo") int tranNo,
+//			Model model) throws Exception {
+//
+//		System.out.println("/purchase/updatePurchaseView : GET");
+//
+//		purchase = purchaseService.getPurchase(tranNo);
+//
+//		model.addAttribute("purchase", purchase);
+//
+//		return "forward:/purchase/updatePurchaseView.jsp";
+//
+//	}
 }

@@ -113,8 +113,7 @@ public class PurchaseController {
 	}
 
 	@RequestMapping(value = "listPurchase")
-	public String listPurchase(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
-			throws Exception {
+	public String listPurchase(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
 		System.out.println("/purchase/listPurchase : GET / POST");
 
@@ -126,7 +125,7 @@ public class PurchaseController {
 		User user = (User) request.getSession().getAttribute("user");
 		String buyerId = user.getUserId();
 		// System.out.println("session buyerid : " + buyerId);
-
+		
 		Map<String, Object> map = purchaseService.getPurchaseList(search, buyerId);
 
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
@@ -220,7 +219,7 @@ public class PurchaseController {
 
 		purchase = purchaseService.getPurchase(tranNo);
 		int prodNo = purchase.getPurchaseProd().getProdNo();
-		System.out.println("prodNo값 확인 : "+prodNo);
+		System.out.println("prodNo값 확인 : " + prodNo);
 
 		product.setProdNo(purchase.getPurchaseProd().getProdNo());
 
@@ -228,7 +227,7 @@ public class PurchaseController {
 		purchase.setPurchaseProd(product);
 
 		purchaseService.updateTranCode(purchase);
-		
+
 		if (tranCode.equals("400")) {
 
 			System.out.println("여기 들어오나욤?");

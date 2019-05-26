@@ -5,29 +5,51 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ReviewMapper">
+
 	<resultMap type="review" id="reviewSelectMap">
 		<result property="reviewNo" 				column="review_no" 		jdbcType="INTEGER"/>
-		<result property="purchase.tranNo" 			column="review_tranNo" 				jdbcType="INTEGER"/>
-  		<result property="purchaseProd.prodNo" 		column="review_prodNo" 				jdbcType="INTEGER"/>
-  		<result property="buyer.userId" 			column="reviewer_id"				jdbcType="VARCHAR"/>
-  		<result property="buyer.userName"			column="reviewer" 	jdbcType="VARCHAR"/>
+		<result property="rePurchase.tranNo" 			column="review_tranNo" 				jdbcType="INTEGER"/>
+  		<result property="reProduct.prodNo" 		column="review_prodNo" 				jdbcType="INTEGER"/>
+  		<result property="reUser.userId" 			column="reviewer_id"				jdbcType="VARCHAR"/>
+  		 <result property="reviewFile" 				column="review_file" 			jdbcType="VARCHAR"/>
   		<result property="reviewDate" 				column="review_date" 		jdbcType="DATE"/>
-  		<result property="reviewFile" 				column="review_file" 			jdbcType="VARCHAR"/>
+  		<result property="reUser.userName"			column="reviewer" 	jdbcType="VARCHAR"/>
   		<result property="reviewDetail" 			column="review_detail" 		jdbcType="VARCHAR"/>
-  		<result property="reviewFile" 				column="review_title" 	jdbcType="CHAR"/> 		
+  		<result property="reviewTitle" 				column="review_title" 	jdbcType="VARCHAR"/> 		
   	</resultMap>
-  	
+
   	<insert id="addReview" parameterType="review">
 		INSERT 
-		INTO review(review_no, tran_no, prod_no, buyer_id, reviewer, review_date, review_file, review_detail, review_title)
+		INTO reviews(review_no, review_tranNo, review_prodNo, reviewer_id, review_file, review_date, reviewer,review_detail, review_title)
 		VALUES (
-					seq_reviews_review_no.NEXTVAL, #{purchase.tranNo}, #{purchaseProd.prodNo}, #{buyer.userId},
-					#{buyer.userName}, SYSDATE, #{reviewFile}, #{reviewDetail}, #{reviewTitle} )
+					seq_reviews_review_no.NEXTVAL, #{rePurchase.tranNo:INTEGER}, #{reProduct.prodNo:INTEGER}, #{reUser.userId:VARCHAR},
+					#{reviewFile:VARCHAR}, SYSDATE, #{reUser.userName:VARCHAR}, #{reviewDetail:VARCHAR}, #{reviewTitle:VARCHAR} )
 	</insert>
+	
+	<select  id="getReviewList"  parameterType="map"	resultMap="reviewSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT *
+											FROM reviews
+											<where>
+												 review_prodNo=#{prodNo}
+											</where> 
+											ORDER BY review_no) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT review_no
+						FROM reviews 
+							) countTable						
+	 </select>
 	 
 	 <select id="getReview" parameterType="int" resultMap="reviewSelectMap">
   		SELECT 
-		review_no, tran_no, prod_no, buyer_id, reviewer, review_date, review_file, review_detail, review_title
+		review_no, review_tranNo, review_prodNo, reviewer_id, review_file, review_date, reviewer, review_detail, review_title
 		FROM reviews
 		WHERE review_no = #{reviewNo}
   	</select>
@@ -43,26 +65,4 @@
 	   	WHERE review_no = #{reviewNo}
 	 </update>
 	 
-	<!-- SQL : SELECT LIST -->
-	<select  id="getReviewList"  parameterType="map"	resultMap="review">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT *
-											FROM reviews
-											<where>
-												 prod_no=#{prodNo}
-											</where> 
-											ORDER BY review_no) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
-
-
-	<!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT review_no
-						FROM reviews 
-							) countTable						
-	 </select>
 </mapper>

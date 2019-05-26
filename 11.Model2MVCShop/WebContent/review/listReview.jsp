@@ -44,8 +44,50 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
+	function fncGetList(currentPage) {
+		$("#currentPage").val(currentPage)
+		$("form").attr("method" , "POST").attr("action" , "/product/getProduct").submit();
+	}
+	
+	//============= userId 에 회원정보보기  Event  처리 (double Click)=============
+	 $(function() {
+		 
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$(  "td:nth-child(2)").on("click" , function() {
 
-</script>
+			var reviewNo = $(this).children("input").val().trim();
+			alert(reviewNo);
+			
+			$.ajax( 
+					{
+						url : "/review/json/getReview/"+reviewNo ,
+						method : "GET" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData , status) {
+							alert(status);
+							alert(JSONData.reviewDetail);
+							status = $(".hidden22").css("display"); 
+							alert($(".hidden22").css("display"));
+							if (status == "none") {
+								$(".hidden22").css("display", ""); 
+							} 
+
+							var displayValue = "<h6>"+JSONData.reviewDetail+"<br/>"+"</h6>";
+							$("h6").remove();
+							$( "#"+reviewNo+"" ).html(displayValue);
+						}
+				});
+					////////////////////////////////////////////////////////////////////////////////////////////
+				
+		});
+	});	
+	
+	
+	</script>
 
 
 </head>
@@ -60,7 +102,7 @@
 	<div class="container">
 	
 		<div class="page-header text-success">
-	       <h3>REVIEW</h3>
+	       <h5>REVIEW</h5>
 	    </div>
 	    
 	   <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -68,8 +110,6 @@
 
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-				  
-				  <button type="button" class="btn btn-default">후기작성</button>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -96,34 +136,15 @@
 		<tbody>
 
 		  <c:set var="i" value="0" />
-		  <c:forEach var="purchase" items="${list}">
+		  <c:forEach var="review" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
-			  <td align="center">${purchase.tranNo}</td>
-			  <td align="left">${purchase.buyer.userId}</td>
-			  <td align="left"><img src="/images/uploadFiles/${purchase.purchaseProd.fileName}" width="66" height="66"/>
-			  &nbsp; &nbsp; ${purchase.purchaseProd.prodName}<input type="hidden"  value="${purchase.purchaseProd.prodNo  }"/></td>
-			  <td align="left">
-			  	<c:if test="${purchase.quantity>=1 }">${(purchase.purchaseProd.price)*(purchase.quantity)}</c:if>
-				<c:if test="${purchase.quantity==0 }">${purchase.purchaseProd.price}</c:if>원</td>
-			  <td align="left">현재
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">구매완료 상태 입니다.</c:if>
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='200'}">배송중 상태 입니다.</c:if>
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='300'}">배송완료 상태 입니다.</c:if>
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='400'}">주문취소 상태 입니다.</c:if>
-			</td>
-			  	
-			  <td align="left">
-			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
-			  		<div class="cancle"><input type="hidden" value="${purchase.purchaseProd.prodNo }" />주문취소</div></c:if>
-			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
-			  		<div class="ship"><input type="hidden"  value="${purchase.purchaseProd.prodNo }" />배송하기</div></c:if>
-			  </td>
-			 <td align="left">
-			  	<i class="glyphicon glyphicon-search" id= "${purchase.tranNo}"></i>
-			  	<input type="hidden" value="${purchase.tranNo}">
-			  </td>
+			  <td align="center">${i} </td>
+			  <td align="left">${review.reviewTitle}<input type="hidden" value="${review.reviewNo}"> </td>
+			  <td align="left">${review.reUser.userId}</td>
+			  <td align="left">${review.reviewDate}</td>
 			</tr>
+			<tr class="hidden22"  style="display:none;" ><td   style="padding-left: 150px;" colspan='4'  id= "${review.reviewNo}"></td></tr>
           </c:forEach>
         
         </tbody>
