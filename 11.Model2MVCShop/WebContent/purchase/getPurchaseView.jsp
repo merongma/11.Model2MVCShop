@@ -113,8 +113,9 @@ body {
 				<strong>구매방법</strong>
 			</div>
 			<div class="col-xs-8 col-md-4">
-				<c:if test= "${purchase.paymentOption eq 001}">현금 구매</c:if>
-				<c:if test="${purchase.paymentOption eq 002}">신용 구매</c:if>
+				${purchase.paymentOption }
+				<c:if test="${purchase.paymentOption eq '001'} ">현금구매</c:if>
+				<c:if test="${purchase.paymentOption eq '002'} ">신용구매</c:if>
 			</div>
 		</div>
 

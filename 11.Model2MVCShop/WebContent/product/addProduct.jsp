@@ -44,8 +44,8 @@ body {
 		 		self.location = "/product/listProduct?menu=manage"
 			});
 		 	
-			$(".btn btn-success btn").on("click" , function() {
-		 		self.location = "/product/addProductView.jsp"
+			$("a[href='#' ]").on("click", function() {
+		 		self.location = "/product/addProduct"
 			});
 	 });
 	

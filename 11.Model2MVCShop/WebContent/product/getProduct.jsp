@@ -38,15 +38,17 @@ body {
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 //////////////////////구매버튼//////////////////////
+
 	$(function() {
 		var stock = ${product.stock }
-		if(${product.stock } !=0){
+
+		if(stock!=0){
 			$( "button.btn.btn-success").on("click" , function() {
 				alert(stock);
 		 		self.location = "/purchase/addPurchaseView?prodNo=${product.prodNo}"
 			});
 			
-		}else{
+		}else {
 			$( "button.btn.btn-success").on("click" , function() {
 				alert("품절 상품 입니다!!!");
 		 		
@@ -54,6 +56,7 @@ body {
 			
 		}
 	});
+
 ///////////////////////////이전버튼///////////////////////		
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
@@ -67,7 +70,8 @@ $(function() {
 				var tranNo =${purchase.tranNo}
 
 					$( "button.btn.btn-default" ).on("click" , function() {
-						if( tranNo == null  ){
+						if( tranNo == null ){
+						alert("???")
 						alert("주문한 회원만 후기작성이 가능합니다!!");
 						return false;
 						}
