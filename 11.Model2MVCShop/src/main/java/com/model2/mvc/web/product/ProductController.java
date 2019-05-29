@@ -102,6 +102,8 @@ public class ProductController {
 		model.addAttribute("user", user);
 		model.addAttribute("purchase", purchase);
 
+		System.out.println("1.model : " + model);
+
 		Cookie cookieBox[] = request.getCookies();
 		Cookie cookie = null;
 
@@ -126,7 +128,7 @@ public class ProductController {
 		// System.out.println("쿠키값 확인 " + cookie.getValue());
 		response.addCookie(cookie);
 
-		System.out.println("menu값" + menu);
+		// System.out.println("menu값" + menu);
 
 		Search search = new Search();
 		System.out.println("getproduct 에서 lsit 들어오나요?");
@@ -141,11 +143,13 @@ public class ProductController {
 				pageSize);
 		System.out.println("map 값은? :" + map);
 		System.out.println("resultPage 값은? :" + resultPage);
-		System.out.println("마지막으로 모델값 : " + model);
+		System.out.println("2.model : " + model);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		//System.out.println("jsp 마지막...확인하려고요"+purchase.getTranNo());
+
+		System.out.println("3.model : " + model);
+
 		if (menu.equals("manage")) {
 
 			return "forward:/product/updateProductView.jsp";
@@ -157,70 +161,67 @@ public class ProductController {
 
 	}
 
-	 @RequestMapping(value = "getProduct", method = RequestMethod.POST)
-	 public String getProduct(@RequestParam("prodNo") int prodNo, Model model,
-	 HttpServletRequest request,
-	 HttpServletResponse response) throws Exception {
-	
-	 System.out.println("/product/getProduct : POST");
-	
-	 Product product = productService.getProduct(prodNo);
-	 User user = (User) request.getSession().getAttribute("user");
-	 Purchase purchase = purchaseService.getPurchase2(prodNo);
-	
-	 model.addAttribute("product", product);
-	 model.addAttribute("user", user);
-	 model.addAttribute("purchase", purchase);
-	
-	 Cookie cookieBox[] = request.getCookies();
-	 Cookie cookie = null;
-	
-	 if (cookieBox != null) {
-	 for (int i = 0; i < cookieBox.length; i++) {
-	 if (cookieBox[i].getName().equals("history")) {
-	 cookie = new Cookie("history", cookieBox[i].getValue() + "," + prodNo);
-	 break;
-	 }
-	 }
-	 } else {
-	 cookie = new Cookie("history", String.valueOf(prodNo));
-	 }
-	
-	 if (cookie == null) {
-	 cookie = new Cookie("history", String.valueOf(prodNo));
-	 }
-	
-	 cookie.setMaxAge(-1);
-	 cookie.setPath("/");
-	
-	 System.out.println("쿠키값 확인 " + cookie.getValue());
-	 response.addCookie(cookie);
-	
-	 ////
-	 System.out.println("getproduct 에서 lsit 들어오나요?");
-	 Search search = new Search();
-	 System.out.println("getproduct 에서 lsit 들어오나요?");
-	 if (search.getCurrentPage() == 0) {
-	 search.setCurrentPage(1);
-	 }
-	 search.setPageSize(pageSize);
-	 System.out.println("search 값은 ? : " + search);
-	 Map<String, Object> map = reviewService.getReviewList(search, prodNo);
-	
-	 Page resultPage = new Page(search.getCurrentPage(), ((Integer)
-	 map.get("totalCount")).intValue(), pageUnit,
-	 pageSize);
-	 System.out.println("map 값은? :" + map);
-	 System.out.println("resultPage 값은? :" + resultPage);
-	 System.out.println("마지막으로 모델값 : "+model);
-	 model.addAttribute("list", map.get("list"));
-	 model.addAttribute("resultPage", resultPage);
-	 model.addAttribute("search", search);
-	
-	System.out.println("jsp 마지막...확인하려고요"+purchase.getTranNo());
-	
-	 return "forward:/product/getProduct.jsp";
-	 }
+	@RequestMapping(value = "getProduct", method = RequestMethod.POST)
+	public String getProduct(@RequestParam("prodNo") int prodNo, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		System.out.println("/product/getProduct : POST");
+
+		Product product = productService.getProduct(prodNo);
+		User user = (User) request.getSession().getAttribute("user");
+		Purchase purchase = purchaseService.getPurchase2(prodNo);
+
+		model.addAttribute("product", product);
+		model.addAttribute("user", user);
+		model.addAttribute("purchase", purchase);
+
+		Cookie cookieBox[] = request.getCookies();
+		Cookie cookie = null;
+
+		if (cookieBox != null) {
+			for (int i = 0; i < cookieBox.length; i++) {
+				if (cookieBox[i].getName().equals("history")) {
+					cookie = new Cookie("history", cookieBox[i].getValue() + "," + prodNo);
+					break;
+				}
+			}
+		} else {
+			cookie = new Cookie("history", String.valueOf(prodNo));
+		}
+
+		if (cookie == null) {
+			cookie = new Cookie("history", String.valueOf(prodNo));
+		}
+
+		cookie.setMaxAge(-1);
+		cookie.setPath("/");
+
+		System.out.println("쿠키값 확인 " + cookie.getValue());
+		response.addCookie(cookie);
+		
+		Search search = new Search();
+		System.out.println("getproduct 에서 lsit 들어오나요?");
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		System.out.println("search 값은 ? : " + search);
+		Map<String, Object> map = reviewService.getReviewList(search, prodNo);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+		System.out.println("map 값은? :" + map);
+		System.out.println("resultPage 값은? :" + resultPage);
+		System.out.println("2.model : " + model);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+
+		System.out.println("3.model : " + model);
+
+
+		return "forward:/product/getProduct.jsp";
+	}
 
 	@RequestMapping(value = "updateProduct", method = RequestMethod.GET)
 	public String updateProductView(@RequestParam("prodNo") int prodNo, Model model) throws Exception {

@@ -2,6 +2,7 @@
 <%@ page pageEncoding="EUC-KR"%>
 
 
+
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -66,24 +67,18 @@ body {
 		});
 		
 //////////////리뷰작성버튼////////////////////////////
-$(function() {
-				var tranNo =${purchase.tranNo}
 
+
+$(function() {
 					$( "button.btn.btn-default" ).on("click" , function() {
-						if( tranNo == null ){
-						alert("???")
-						alert("주문한 회원만 후기작성이 가능합니다!!");
-						return false;
-						}
 						alert("리뷰버튼!!")
-						alert(${product.prodNo});
-						alert(${purchase.tranNo});
+						alert(${product.prodNo})
+						alert(${purchase.tranNo})
 						self.location = "/review/addReview?prodNo=${product.prodNo}"
 					});
 			
-				
-				
 });
+
 
 </script>
 <html>
@@ -104,7 +99,7 @@ $(function() {
 	<div class="container">
 
 		<div class="page-header">
-			<h3 class=" text-success">상품 상세 조회</h3>
+			<h3 class=" text-success">상품 상세 조회 </h3>
 		</div>
 
 		<div class="row">

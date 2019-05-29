@@ -57,7 +57,7 @@ body {
 
 	$(function() {
 		
-		$(".thumbnail").on("click", function() {
+		$(".thumbnail-wrapper").on("click", function() {
 			//alert( $(this).children("input").val());
 			self.location = "/product/getProduct?prodNo="+ $(this).children("input").val()+ "&menu=${param.menu}";
 		});
@@ -106,9 +106,9 @@ body {
 			<c:set var="i" value="0" />
 			<c:forEach var="product" items="${list}">
 				<div class="col-xs-6 col-md-4">
-					<a href="#" class="thumbnail"><input type="hidden" name="prodNo"value="${product.prodNo }" />
+					<a href="#" class="thumbnail-wrapper"><input type="hidden" name="prodNo"value="${product.prodNo }" />
 					<img src="/images/uploadFiles/${product.fileName}" width="300" height="300" onError="this.src='/images/noimage'" alt="noimage">
-					<div class="caption">
+					<div class="caption" align="left">
 						<h3>${product.prodName }</h3>
 						<h5>${product.price }¿ø</h5>
 						<h5>${product.prodDetail }</h5>

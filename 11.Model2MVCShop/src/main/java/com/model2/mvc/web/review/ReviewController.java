@@ -109,72 +109,76 @@ public class ReviewController {
 	public String getReview(@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
 
 		System.out.println("/review/getReview : GET / POST");
-		
+
 		Review review = reviewService.getReview(reviewNo);
 
-		model.addAttribute("review",review);
-
+		model.addAttribute("review", review);
 
 		return "forward:/purchase/getPurchaseView.jsp";
 
 	}
 
-//	@RequestMapping(value = "listReview")
-//	public String listReview(@ModelAttribute("search") Search search, Model model, HttpServletRequest request,
-//			@RequestParam("prodNo") int prodNo) throws Exception {
-//
-//		System.out.println("/review/listReview : GET / POST");
-//
-//		if (search.getCurrentPage() == 0) {
-//			search.setCurrentPage(1);
-//		}
-//		search.setPageSize(pageSize);
-//
-//		User user = (User) request.getSession().getAttribute("user");
-//		String buyerId = user.getUserId();
-//
-//		System.out.println("session buyerid : " + buyerId);
-//
-//		Map<String, Object> map = reviewService.getReviewList(search, prodNo);
-//
-//		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-//				pageSize);
-//		System.out.println(resultPage);
-//
-//		model.addAttribute("list", map.get("list"));
-//		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("search", search);
-//
-//		System.out.println("model :" + model);
-//
-//		return "forward:/review/listReview.jsp";
-//	}
+	// @RequestMapping(value = "listReview")
+	// public String listReview(@ModelAttribute("search") Search search, Model
+	// model, HttpServletRequest request,
+	// @RequestParam("prodNo") int prodNo) throws Exception {
+	//
+	// System.out.println("/review/listReview : GET / POST");
+	//
+	// if (search.getCurrentPage() == 0) {
+	// search.setCurrentPage(1);
+	// }
+	// search.setPageSize(pageSize);
+	//
+	// User user = (User) request.getSession().getAttribute("user");
+	// String buyerId = user.getUserId();
+	//
+	// System.out.println("session buyerid : " + buyerId);
+	//
+	// Map<String, Object> map = reviewService.getReviewList(search, prodNo);
+	//
+	// Page resultPage = new Page(search.getCurrentPage(), ((Integer)
+	// map.get("totalCount")).intValue(), pageUnit,
+	// pageSize);
+	// System.out.println(resultPage);
+	//
+	// model.addAttribute("list", map.get("list"));
+	// model.addAttribute("resultPage", resultPage);
+	// model.addAttribute("search", search);
+	//
+	// System.out.println("model :" + model);
+	//
+	// return "forward:/review/listReview.jsp";
+	// }
 
-//	@RequestMapping(value = "updatePurchase", method = RequestMethod.POST)
-//	public String updatePurchase(@ModelAttribute("Purchase") Purchase purchase, @RequestParam("tranNo") int tranNo,
-//			Model model) throws Exception {
-//
-//		System.out.println("/purchase/updatePurchase : POST");
-//
-//		purchase.setTranNo(tranNo);
-//		purchaseService.updatePurchase(purchase);
-//
-//		model.addAttribute("purchase", purchase);
-//
-//		return "forward:/purchase/getPurchase";
-//	}
-//
-//	@RequestMapping(value = "updatePurchaseView", method = RequestMethod.GET)
-//	public String updatePurchaseView(@ModelAttribute("Purchase") Purchase purchase, @RequestParam("tranNo") int tranNo,
-//			Model model) throws Exception {
-//
-//		System.out.println("/purchase/updatePurchaseView : GET");
-//
-//		purchase = purchaseService.getPurchase(tranNo);
-//
-//		model.addAttribute("purchase", purchase);
-//
-//		return "forward:/purchase/updatePurchaseView.jsp";
-//
-//	}
+	@RequestMapping(value = "updateReview", method = RequestMethod.GET)
+	public String updateReview(@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
+
+		System.out.println("/review/updateReview : GET");
+
+		Review review = reviewService.getReview(reviewNo);
+		int prodNo = review.getReProduct().getProdNo();
+		Product product = productService.getProduct(prodNo);
+		review.setReProduct(product);
+		reviewService.updateReview(review);
+
+		model.addAttribute("review", review);
+
+		return "forward:/review/updateReview";
+	}
+	//
+	// @RequestMapping(value = "updatePurchaseView", method = RequestMethod.GET)
+	// public String updatePurchaseView(@ModelAttribute("Purchase") Purchase
+	// purchase, @RequestParam("tranNo") int tranNo,
+	// Model model) throws Exception {
+	//
+	// System.out.println("/purchase/updatePurchaseView : GET");
+	//
+	// purchase = purchaseService.getPurchase(tranNo);
+	//
+	// model.addAttribute("purchase", purchase);
+	//
+	// return "forward:/purchase/updatePurchaseView.jsp";
+	//
+	// }
 }

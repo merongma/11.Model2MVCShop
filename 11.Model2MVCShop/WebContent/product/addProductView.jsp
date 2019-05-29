@@ -93,6 +93,8 @@
 
 <body>
 
+<body>
+
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
         <div class="container">
@@ -100,6 +102,7 @@
    		</div>
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
+
    	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">	

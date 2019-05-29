@@ -99,7 +99,11 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/toolbar.jsp" />
+	<div class="navbar  navbar-default">
+        <div class="container">
+        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+   		</div>
+   	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->

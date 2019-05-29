@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ page pageEncoding="EUC-KR"%>
 
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 
@@ -114,8 +116,14 @@ body {
 			</div>
 			<div class="col-xs-8 col-md-4">
 				${purchase.paymentOption }
-				<c:if test="${purchase.paymentOption eq '001'} ">현금구매</c:if>
-				<c:if test="${purchase.paymentOption eq '002'} ">신용구매</c:if>
+				<c:if test="${purchase.paymentOption =='001'} ">현금구매1</c:if>
+				<c:if test="${purchase.paymentOption ==001} ">현금구매1</c:if>
+				<c:if test="${purchase.paymentOption eq 001} ">현금구매1</c:if>
+				<c:if test="${purchase.paymentOption eq '001'} ">현금구매1</c:if>
+				<c:if test="${purchase.paymentOption =='002'} ">신용구매2</c:if>
+				<c:if test="${purchase.paymentOption ==002} ">신용구매2</c:if>
+				<c:if test="${purchase.paymentOption eq 002} ">신용구매2</c:if>
+				<c:if test="${purchase.paymentOption eq '002'} ">신용구매2</c:if>
 			</div>
 		</div>
 

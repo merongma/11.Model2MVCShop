@@ -26,31 +26,30 @@
         }
     </style>
     
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+     <!--  ///////////////////////// JavaScript////////////////////////// -->
 	<script type="text/javascript">
-	//============= "등록"  Event 처리 및  연결 =============
-	$(function() {
-		$("button.btn.btn-success").on("click", function() {
-		alert("등록버튼")
-		fncAddReview();
-		});
-	});
-
-	//============= "취소"  Event 처리 및  연결 =============
-	$(function() {
-		$("a[href='#' ]").on("click", function() {
-			alert("취소버튼")
-			history.go(-1);
-		});
-	});
 	
-	function fncAddReview() {
-		document.addReview.submit();
-		$("form").attr("method" , "POST").attr("action" , "/review/addReview").submit();
-	}	
-	</script>		
-    
+	//============= "수정"  Event 처리 및  연결 =============
+	 $(function() {
+			$( "button.btn.btn-success" ).on("click" , function() {
+				$("form").attr("method" , "POST").attr("enctype","multipart/form-data").attr("action" , "/product/getProduct").submit();
+			});
+		});	
+		
+		
+		//============= "취소"  Event 처리 및  연결 =============
+		$(function() {
+			$("a[href='#' ]").on("click" , function() {
+				history.go(-1);
+			});
+		});	
+
+
+
+	</script>
+
 </head>
+
 
 <body>
 
@@ -60,58 +59,63 @@
         	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
    		</div>
    	</div>
-
+   	<!-- ToolBar End /////////////////////////////////////-->
+   	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">	
-		<h1 class="bg-success text-center">REVIEW</h1>
+		<h1 class="bg-success text-center">REVIEW 수정</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" name ="addReview">
+		<form class="form-horizontal">
+		<input type="hidden" name="reviewNo" value="${review.reviewNo}"/>  
 		
-		  <div class="form-group">
-		    <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상품명 </label>
+	  	<div class="form-group">
+		   <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상 품 명</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" value="${product.prodName }" readonly>
+		      <input type="text" class="form-control" id="prodName" name=prodName value="${review.reProduct.prodName }" placeholder="상품명"  readonly>
+		       <span id="helpBlock" class="help-block">
+		      	<strong class="text-danger">상품명은 수정불가</strong>
+		      </span>
+		    </div>
+		</div>
+		  
+		<div class="form-group">
+		   <label for="prodNo" class="col-sm-offset-1 col-sm-3 control-label">상품번호</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="prodNo" name="prodNo"  value="${review.reProduct.prodNo }" placeholder="상품번호">
+		    </div>
+		</div>
+		 
+		  <div class="form-group">
+		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">작성자</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="userId" name="userId" value="${review.reUser.userId }"  placeholder="작성자">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="prodNo" class="col-sm-offset-1 col-sm-3 control-label">상품번호 </label>
+		    <label for="tranNo" class="col-sm-offset-1 col-sm-3 control-label">주분번호</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodNo"  name = "prodNo" value="${product.prodNo }" readonly>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">작성자 </label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name ="userId" value="${user.userId }" readonly>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="tranNo" class="col-sm-offset-1 col-sm-3 control-label">주문번호 </label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id ="tranNo" name="tranNo"value="${purchase.tranNo }" readonly>
+		      <input type="text" class="form-control" id="tranNo" name="tranNo" value="${review.rePurchase.tranNo }"placeholder="주분번호">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="reviewTitle" class="col-sm-offset-1 col-sm-3 control-label">제목</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="reviewTitle" name=reviewTitle >
+		      <input type="text" class="form-control" id="reviewTitle" name="reviewTitle"  placeholder="제목">
 		    </div>
 		  </div>
 		  
-		  <div class="form-group">
+		   <div class="form-group">
 		    <label for="reviewDetail" class="col-sm-offset-1 col-sm-3 control-label">내용</label>
 		    <div class="col-sm-4">
-		    	<textarea rows=10 cols=10 id="reviewDetail" name="reviewDetail" class="form-control" ></textarea>
+		      <input type="text" class="form-control" id="reviewDetail" name="reviewDetail"  placeholder="내용">
 		    </div>
 		  </div>
 		  
-		 <div class="form-group">
-		    <label for="reviewFile" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
+		   <div class="form-group">
+		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
 		      <input type="file"  class="form-control" id="file" name="file" placeholder="이미지" >
 		    </div>
@@ -119,8 +123,8 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-success"  >등 &nbsp;록</button>
-			  <a class="btn btn-success btn" href="#" role="button">취&nbsp;소</a>
+		      <button type="button" class="btn btn-success"  >수 &nbsp;정</button>
+			  <a class="btn btn-success btn" href="#" role="button">취 &nbsp;소</a>
 		    </div>
 		  </div>
 		</form>

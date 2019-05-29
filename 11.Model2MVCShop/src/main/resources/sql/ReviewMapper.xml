@@ -8,7 +8,7 @@
 
 	<resultMap type="review" id="reviewSelectMap">
 		<result property="reviewNo" 				column="review_no" 		jdbcType="INTEGER"/>
-		<result property="rePurchase.tranNo" 			column="review_tranNo" 				jdbcType="INTEGER"/>
+		<result property="rePurchase.tranNo" 		column="review_tranNo" 				jdbcType="INTEGER"/>
   		<result property="reProduct.prodNo" 		column="review_prodNo" 				jdbcType="INTEGER"/>
   		<result property="reUser.userId" 			column="reviewer_id"				jdbcType="VARCHAR"/>
   		 <result property="reviewFile" 				column="review_file" 			jdbcType="VARCHAR"/>
@@ -56,11 +56,17 @@
 
 
 	 <update	id="updateReview"	parameterType="review" >
-	   	UPDATE transaction
+	   	UPDATE reviews
 	   	<set>
-	   		review_file=#{reviewFile},
-	   		review_detail=#{reviewDetail},
-	   		review_title=#{reviewTitle}
+	   		review_no=#{reviewNo},
+	   		review_tranNo=#{rePurchase.tranNo},
+	   		review_prodNo=#{reProduct.prodNo},
+	   		reviewer_id=#{reUser.userId},
+	   		review_file=#{reviewFile:VARCHAR},
+	   		review_date=#{reviewDate},
+	   		reviewer=#{reUser.userName:VARCHAR},
+	   		review_detail=#{reviewDetail:VARCHAR},
+	   		review_title=#{reviewTitle:VARCHAR}
 	   	</set>
 	   	WHERE review_no = #{reviewNo}
 	 </update>

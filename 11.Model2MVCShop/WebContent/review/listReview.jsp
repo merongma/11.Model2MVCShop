@@ -85,6 +85,17 @@
 				
 		});
 	});	
+	//////////////////////////////////////////////////////
+	 $(function() {
+		
+			$(  "td:nth-child(5):contains('수정')").on("click" , function() {
+				var reviewNo =$(this).children("input").val();
+				alert(reviewNo)
+				self.location = "/review/updateReview?reviewNo="+reviewNo;
+				
+			});
+	 });
+
 	
 	
 	</script>
@@ -130,6 +141,7 @@
             <th align="left" >TITLE</th>
             <th align="left">POSTED BY</th>
             <th align="left">DATE</th>
+            <th align="left" class ="glyphicon glyphicon-pencil"></th>
           </tr>
         </thead>
        
@@ -143,6 +155,7 @@
 			  <td align="left">${review.reviewTitle}<input type="hidden" value="${review.reviewNo}"> </td>
 			  <td align="left">${review.reUser.userId}</td>
 			  <td align="left">${review.reviewDate}</td>
+			  <td align="left"><c:if test="${review.reUser.userId eq user.userId }"><input type="hidden" value="${review.reviewNo}"> 수정</c:if></td>
 			</tr>
 			<tr class="hidden22"  style="display:none;" ><td   style="padding-left: 150px;" colspan='4'  id= "${review.reviewNo}"></td></tr>
           </c:forEach>
