@@ -1,5 +1,6 @@
 package com.model2.mvc.web.review;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -64,6 +67,9 @@ public class ReviewController {
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 
+	@Value("#{commonProperties['uploadDir']}")
+	String uploadDir;
+
 	@RequestMapping(value = "addReview", method = RequestMethod.GET)
 	public String addReview(@RequestParam("prodNo") int prodNo, Model model, HttpServletRequest request)
 			throws Exception {
@@ -88,7 +94,8 @@ public class ReviewController {
 
 	@RequestMapping(value = "addReview", method = RequestMethod.POST)
 	public String addReview(@ModelAttribute("review") Review review, @RequestParam("prodNo") int prodNo,
-			@RequestParam("tranNo") int tranNo, HttpServletRequest request) throws Exception {
+			@RequestParam("tranNo") int tranNo, HttpServletRequest request, @RequestParam("file") MultipartFile file)
+			throws Exception {
 
 		System.out.println("/review/addReview : POST");
 
@@ -100,23 +107,31 @@ public class ReviewController {
 		review.setReProduct(product);
 		review.setRePurchase(purchase);
 
+		String fileName = file.getOriginalFilename();
+		File target = new File(uploadDir, fileName);
+
+		FileCopyUtils.copy(file.getBytes(), target);
+
+		review.setReviewFile(fileName);
+
 		reviewService.addReview(review);
 
 		return "forward:/product/getProduct";
 	}
 
-	@RequestMapping(value = "getReview")
-	public String getReview(@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
-
-		System.out.println("/review/getReview : GET / POST");
-
-		Review review = reviewService.getReview(reviewNo);
-
-		model.addAttribute("review", review);
-
-		return "forward:/purchase/getPurchaseView.jsp";
-
-	}
+	// @RequestMapping(value = "getReview")
+	// public String getReview(@RequestParam("reviewNo") int reviewNo, Model model)
+	// throws Exception {
+	//
+	// System.out.println("/review/getReview : GET / POST");
+	//
+	// Review review = reviewService.getReview(reviewNo);
+	//
+	// model.addAttribute("review", review);
+	//
+	// return "forward:/purchase/getPurchaseView.jsp";
+	//
+	// }
 
 	// @RequestMapping(value = "listReview")
 	// public String listReview(@ModelAttribute("search") Search search, Model
@@ -151,34 +166,50 @@ public class ReviewController {
 	// return "forward:/review/listReview.jsp";
 	// }
 
-	@RequestMapping(value = "updateReview", method = RequestMethod.GET)
-	public String updateReview(@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
+	@RequestMapping(value = "updateReviewView", method = RequestMethod.GET)
+	public String updateReviewView(@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
 
-		System.out.println("/review/updateReview : GET");
+		System.out.println("/review/updateReviewView : GET");
 
 		Review review = reviewService.getReview(reviewNo);
 		int prodNo = review.getReProduct().getProdNo();
 		Product product = productService.getProduct(prodNo);
 		review.setReProduct(product);
+
+		model.addAttribute("review", review);
+		System.out.println("model값 : " + model);
+
+		return "forward:/review/updateReviewView.jsp";
+	}
+
+	@RequestMapping(value = "updateReview", method = RequestMethod.POST)
+	public String updateReview(@ModelAttribute("Review") Review review, @RequestParam("reviewNo") int reviewNo,
+			@RequestParam("prodNo") int prodNo, @RequestParam("userId") String userId,
+			@RequestParam("tranNo") int tranNo, Model model, @RequestParam("file") MultipartFile file)
+			throws Exception {
+
+		System.out.println("/review/updateReview : POST");
+		System.out.println("들어오는 리뷰값 " + review);
+		// System.out.println("상품명은? "+prodName);
+
+		Product product = productService.getProduct(prodNo);
+		review.setReProduct(product);
+		Purchase purchase = purchaseService.getPurchase(tranNo);
+		review.setRePurchase(purchase);
+		User user = userService.getUser(userId);
+		review.setReUser(user);
+		
+		String fileName = file.getOriginalFilename();
+		File target = new File(uploadDir, fileName);
+
+		FileCopyUtils.copy(file.getBytes(), target);
+
+		review.setReviewFile(fileName);
 		reviewService.updateReview(review);
 
 		model.addAttribute("review", review);
 
-		return "forward:/review/updateReview";
+		return "forward:/product/getProduct";
 	}
-	//
-	// @RequestMapping(value = "updatePurchaseView", method = RequestMethod.GET)
-	// public String updatePurchaseView(@ModelAttribute("Purchase") Purchase
-	// purchase, @RequestParam("tranNo") int tranNo,
-	// Model model) throws Exception {
-	//
-	// System.out.println("/purchase/updatePurchaseView : GET");
-	//
-	// purchase = purchaseService.getPurchase(tranNo);
-	//
-	// model.addAttribute("purchase", purchase);
-	//
-	// return "forward:/purchase/updatePurchaseView.jsp";
-	//
-	// }
+
 }

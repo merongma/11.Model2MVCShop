@@ -69,14 +69,11 @@
 						},
 						success : function(JSONData , status) {
 							alert(status);
-							alert(JSONData.reviewDetail);
-							status = $(".hidden22").css("display"); 
-							alert($(".hidden22").css("display"));
-							if (status == "none") {
-								$(".hidden22").css("display", ""); 
-							} 
-
-							var displayValue = "<h6>"+JSONData.reviewDetail+"<br/>"+"</h6>";
+							
+							var displayValue = 
+							"<h6>"+JSONData.reviewDetail+"<br/>" +
+							"<img src=/images/uploadFiles/"+JSONData.reviewFile+"<br/>"
+							+"</h6>";
 							$("h6").remove();
 							$( "#"+reviewNo+"" ).html(displayValue);
 						}
@@ -91,7 +88,7 @@
 			$(  "td:nth-child(5):contains('수정')").on("click" , function() {
 				var reviewNo =$(this).children("input").val();
 				alert(reviewNo)
-				self.location = "/review/updateReview?reviewNo="+reviewNo;
+				self.location = "/review/updateReviewView?reviewNo="+reviewNo;
 				
 			});
 	 });
@@ -142,6 +139,7 @@
             <th align="left">POSTED BY</th>
             <th align="left">DATE</th>
             <th align="left" class ="glyphicon glyphicon-pencil"></th>
+             
           </tr>
         </thead>
        
@@ -152,12 +150,14 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${i} </td>
-			  <td align="left">${review.reviewTitle}<input type="hidden" value="${review.reviewNo}"> </td>
+			  <td align="left">${review.reviewTitle}<p  id = "${review.reviewNo}"></p><input type="hidden" value="${review.reviewNo}"> </td>
 			  <td align="left">${review.reUser.userId}</td>
 			  <td align="left">${review.reviewDate}</td>
-			  <td align="left"><c:if test="${review.reUser.userId eq user.userId }"><input type="hidden" value="${review.reviewNo}"> 수정</c:if></td>
+			  <td align="left">
+			  <c:if test="${review.reUser.userId eq user.userId }"><input type="hidden" value="${review.reviewNo}">수정</c:if>
+			  </td>
+			  
 			</tr>
-			<tr class="hidden22"  style="display:none;" ><td   style="padding-left: 150px;" colspan='4'  id= "${review.reviewNo}"></td></tr>
           </c:forEach>
         
         </tbody>

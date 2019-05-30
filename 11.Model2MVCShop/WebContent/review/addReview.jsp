@@ -46,7 +46,7 @@
 	
 	function fncAddReview() {
 		document.addReview.submit();
-		$("form").attr("method" , "POST").attr("action" , "/review/addReview").submit();
+		$("form").attr("method" , "POST").attr("enctype","multipart/form-data").attr("action" , "/review/addReview").submit();
 	}	
 	</script>		
     

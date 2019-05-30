@@ -182,7 +182,7 @@ $(function() {
 			  	<c:if test="${purchase.quantity>=1 }">${(purchase.purchaseProd.price)*(purchase.quantity)}</c:if>
 				<c:if test="${purchase.quantity==0 }">${purchase.purchaseProd.price}</c:if>원</td>
 			  <td align="left">현재
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">구매완료 상태 입니다.</c:if>
+				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">주문완료 상태 입니다.</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='200'}">배송중 상태 입니다.</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='300'}">배송완료 상태 입니다.</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='400'}">주문취소 상태 입니다.</c:if>

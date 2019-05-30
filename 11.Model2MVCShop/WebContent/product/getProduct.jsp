@@ -66,18 +66,6 @@ body {
 			});
 		});
 		
-//////////////리뷰작성버튼////////////////////////////
-
-
-$(function() {
-					$( "button.btn.btn-default" ).on("click" , function() {
-						alert("리뷰버튼!!")
-						alert(${product.prodNo})
-						alert(${purchase.tranNo})
-						self.location = "/review/addReview?prodNo=${product.prodNo}"
-					});
-			
-});
 
 
 </script>
@@ -186,16 +174,6 @@ $(function() {
 
 	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
-
-
-
-
-		<div class="form-group">
-				<hr />
-			<div class="col-sm-offset-4  col-sm-4 text-center">
-				<button type="button" class="btn btn-default">후기작성</button>
-			</div>
-		</div>
 
 
 	<!-- ToolBar Start /////////////////////////////////////-->

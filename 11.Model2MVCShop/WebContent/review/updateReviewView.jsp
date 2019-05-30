@@ -25,14 +25,14 @@
             margin-top: 10px;
         }
     </style>
-    
+
      <!--  ///////////////////////// JavaScript////////////////////////// -->
 	<script type="text/javascript">
 	
 	//============= "수정"  Event 처리 및  연결 =============
 	 $(function() {
 			$( "button.btn.btn-success" ).on("click" , function() {
-				$("form").attr("method" , "POST").attr("enctype","multipart/form-data").attr("action" , "/product/getProduct").submit();
+				$("form").attr("method" , "POST").attr("enctype","multipart/form-data").attr("action" , "/review/updateReview?reviewNo=${review.reviewNo}").submit();
 			});
 		});	
 		
@@ -63,7 +63,7 @@
    	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">	
-		<h1 class="bg-success text-center">REVIEW 수정</h1>
+		<h1 class="bg-success text-center">REVIEW UPDATE</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
@@ -73,30 +73,27 @@
 		   <label for="prodName" class="col-sm-offset-1 col-sm-3 control-label">상 품 명</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="prodName" name=prodName value="${review.reProduct.prodName }" placeholder="상품명"  readonly>
-		       <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">상품명은 수정불가</strong>
-		      </span>
 		    </div>
 		</div>
 		  
 		<div class="form-group">
 		   <label for="prodNo" class="col-sm-offset-1 col-sm-3 control-label">상품번호</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="prodNo" name="prodNo"  value="${review.reProduct.prodNo }" placeholder="상품번호">
+		      <input type="text" class="form-control" id="prodNo" name="prodNo"  value="${review.reProduct.prodNo }" placeholder="상품번호" readonly>
 		    </div>
 		</div>
 		 
 		  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">작성자</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId" value="${review.reUser.userId }"  placeholder="작성자">
+		      <input type="text" class="form-control" id="userId" name="userId" value="${review.reUser.userId }"  placeholder="작성자" readonly>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="tranNo" class="col-sm-offset-1 col-sm-3 control-label">주분번호</label>
+		    <label for="tranNo" class="col-sm-offset-1 col-sm-3 control-label">주문번호</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="tranNo" name="tranNo" value="${review.rePurchase.tranNo }"placeholder="주분번호">
+		      <input type="text" class="form-control" id="tranNo" name="tranNo" value="${review.rePurchase.tranNo }"placeholder="주문번호" readonly>
 		    </div>
 		  </div>
 		  
@@ -107,10 +104,10 @@
 		    </div>
 		  </div>
 		  
-		   <div class="form-group">
+		  <div class="form-group">
 		    <label for="reviewDetail" class="col-sm-offset-1 col-sm-3 control-label">내용</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="reviewDetail" name="reviewDetail"  placeholder="내용">
+		    	<textarea rows=10 cols=10 id="reviewDetail" name="reviewDetail" class="form-control" placeholder="내용" ></textarea>
 		    </div>
 		  </div>
 		  

@@ -63,7 +63,7 @@
 	   		review_prodNo=#{reProduct.prodNo},
 	   		reviewer_id=#{reUser.userId},
 	   		review_file=#{reviewFile:VARCHAR},
-	   		review_date=#{reviewDate},
+	   		review_date=#{reviewDate:DATE},
 	   		reviewer=#{reUser.userName:VARCHAR},
 	   		review_detail=#{reviewDetail:VARCHAR},
 	   		review_title=#{reviewTitle:VARCHAR}
