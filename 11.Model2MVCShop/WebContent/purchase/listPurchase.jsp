@@ -89,20 +89,29 @@
 			 
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			
-			$(  "td:nth-child(6):contains('상품도착')" ).on("click" , function() {
+			$(  ".arrive" ).on("click" , function() {
 				alert("새로고침 클릭 OK")
 				alert($(this).children("input").val());
-				//self.location="/purchase/updateTranCode?tranNo="+$(this).children("input").val()+"&tranCode=300";
+				self.location="/purchase/updateTranCode?tranNo="+$(this).children("input").val()+"&tranCode=300";
 		
 			});
 			
 			
-			$(  "td:nth-child(6):contains('주문취소')" ).on("click" , function() {
+			$(  ".cancle" ).on("click" , function() {
 				alert("주문취소 클릭 OK")
 				alert($(this).children("input").val());
 				self.location="/purchase/updateTranCode?tranNo="+$(this).children("input").val()+"&tranCode=400";
 		
 			});
+			
+			$(  ".review" ).on("click" , function() {
+				alert("후기작성 클릭 OK")
+				alert($("#prodNo").val());
+				self.location="/review/addReview?prodNo="+$(this).children("input").val();
+	
+			});
+			
+			
 			$( "td:nth-child(7)" ).on("click" , function() {
 				var tranNo = $(this).children("input").val().trim();
 				$.ajax({
@@ -120,7 +129,7 @@
 
 						var displayValue = "<h6>" + 
 						"제품번호 : "+JSONData.purchaseProd.prodNo + "<br/>" +
-						"수령인 : "+JSONData.purchaseProd.receiverName + "<br/>" +
+						"수령인 : "+JSONData.receiverName + "<br/>" +
 						"연락처 : "+ JSONData.receiverPhone + "<br/>" +
 						"배송지 : "+ JSONData.divyAddr + "<br/>" +
 						"배송메모: "+ JSONData.divyRequest + "<br/>" +
@@ -133,10 +142,10 @@
 					}
 				});
 			});
-			//==> 아래와 같이 정의한 이유는 ??
+			
 			$(  "td:nth-child(6)" ).css("color" , "#5F04B4");
 			
-			
+		
 		});	
 	
 	</script>
@@ -203,21 +212,25 @@
 			  <td align="center">${purchase.tranNo}</td>
 			  <td align="left">${purchase.buyer.userId}</td>
 			  <td align="left"><img src="/images/uploadFiles/${purchase.purchaseProd.fileName}" width="66" height="66"/>
-			  &nbsp; &nbsp; ${purchase.purchaseProd.prodName}<input type="hidden" name= "prodNo" value="${purchase.purchaseProd.prodNo  }"/></td>
+			  &nbsp; &nbsp; ${purchase.purchaseProd.prodName}<input type="hidden"value="${purchase.purchaseProd.prodNo  }"/></td>
 			  <td align="left">
 			  	<c:if test="${purchase.quantity>=1 }">${(purchase.purchaseProd.price)*(purchase.quantity)}</c:if>
 				<c:if test="${purchase.quantity==0 }">${purchase.purchaseProd.price}</c:if>원</td>
 			  <td align="left">현재
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">구매완료</c:if>
+				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">주문완료</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='200'}">배송중</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='300'}">배송완료</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='400'}">주문취소</c:if>
 				상태 입니다.</td>
 			  
 			  <td align="left">
-			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">주문취소</c:if>
-			  	<input type="hidden" name = "tranNo" value="${purchase.tranNo  }">
-			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='200'}">상품도착</c:if>
+			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
+			  		<div class ="cancle">	<input type="hidden"  value="${purchase.tranNo  }">주문취소</div></c:if>
+			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='200'}">
+			  		<div class ="arrive"><input type="hidden"  value="${purchase.tranNo  }">상품도착</div></c:if>
+			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='300'}">
+			  		<div class ="review"><input type="hidden" id= "prodNo" value="${purchase.purchaseProd.prodNo  }"/>후기작성</div></c:if>
+			  
 			  </td>
 			  <td align="left">
 			  	<i class="glyphicon glyphicon-search" id= "${purchase.tranNo}"></i>

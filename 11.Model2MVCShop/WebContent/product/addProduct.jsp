@@ -20,17 +20,31 @@
 		 		self.location = "/product/listProduct?menu=manage"
 			});
 		 	
+<<<<<<< HEAD
 		 	$( ".ct_btn01:contains('추가등록')" ).on("click" , function() {
 		 		self.location = "/product/addProductView.jsp"
+=======
+			$("a[href='#' ]").on("click", function() {
+		 		self.location = "/product/addProduct"
+>>>>>>> refs/heads/master
 			});
 	 });
 	
+<<<<<<< HEAD
 	</script>		
 	
 </head>
+=======
+ </script>
+>>>>>>> refs/heads/master
 
+<<<<<<< HEAD
 <body bgcolor="#ffffff" text="#000000">
+=======
+ </head>
+>>>>>>> refs/heads/master
 
+<<<<<<< HEAD
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="15" height="37">
@@ -49,7 +63,11 @@
 		</td>
 	</tr>
 </table>
+=======
+<body>
+>>>>>>> refs/heads/master
 
+<<<<<<< HEAD
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 13px;">
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -88,7 +106,10 @@
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+=======
+>>>>>>> refs/heads/master
 
+<<<<<<< HEAD
 	<tr>
 		<td width="104" class="ct_write">
 			상품상세정보 <img  src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
@@ -99,6 +120,11 @@
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+=======
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/toolbar.jsp" />
+   	<!-- ToolBar End /////////////////////////////////////-->
+>>>>>>> refs/heads/master
 
 	<tr>
 		<td width="104" class="ct_write">

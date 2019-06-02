@@ -9,7 +9,7 @@ public class Purchase {
 
 	private User buyer;
 	private String divyAddr;
-	private String divyDate;
+	private Date divyDate;
 	private String divyRequest;
 	private Date orderDate;
 	private String paymentOption;
@@ -39,11 +39,11 @@ public class Purchase {
 		this.divyAddr = divyAddr;
 	}
 
-	public String getDivyDate() {
+	public Date getDivyDate() {
 		return divyDate;
 	}
 
-	public void setDivyDate(String divyDate) {
+	public void setDivyDate(Date divyDate) {
 		this.divyDate = divyDate;
 	}
 

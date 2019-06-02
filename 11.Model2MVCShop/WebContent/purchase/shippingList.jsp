@@ -83,7 +83,7 @@ $(function() {
 
 				var displayValue = "<h6>" + 
 				"제품번호 : "+JSONData.purchaseProd.prodNo + "<br/>" +
-				"수령인 : "+JSONData.purchaseProd.receiverName + "<br/>" +
+				"수령인 : "+JSONData.receiverName + "<br/>" +
 				"연락처 : "+ JSONData.receiverPhone + "<br/>" +
 				"배송지 : "+ JSONData.divyAddr + "<br/>" +
 				"배송메모: "+ JSONData.divyRequest + "<br/>" +
@@ -99,15 +99,15 @@ $(function() {
 	
 
 
-	$('#cancle').click(function () { 
+	$('.cancle').click(function () { 
 		alert("취소버튼.") 
 		alert($(this).children("input").val());
-		//self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=400";
+		self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=400";
 		});
-	$('#ship').click(function () { 
+	$('.ship').click(function () { 
 		alert("배송버튼") 
 		alert($(this).children("input").val());
-		//self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=200";
+		self.location ="/purchase/updateTranCodeByProd?menu=manage&prodNo="+$(this).children("input").val()+"&tranCode=200";
 		});
 
 	
@@ -182,7 +182,7 @@ $(function() {
 			  	<c:if test="${purchase.quantity>=1 }">${(purchase.purchaseProd.price)*(purchase.quantity)}</c:if>
 				<c:if test="${purchase.quantity==0 }">${purchase.purchaseProd.price}</c:if>원</td>
 			  <td align="left">현재
-				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">구매완료 상태 입니다.</c:if>
+				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">주문완료 상태 입니다.</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='200'}">배송중 상태 입니다.</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='300'}">배송완료 상태 입니다.</c:if>
 				<c:if test="${! empty purchase.tranCode && purchase.tranCode=='400'}">주문취소 상태 입니다.</c:if>
@@ -190,9 +190,9 @@ $(function() {
 			  	
 			  <td align="left">
 			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
-			  		<div id="cancle"><input type="hidden" value="${purchase.purchaseProd.prodNo }" />주문취소</div></c:if>
+			  		<div class="cancle"><input type="hidden" value="${purchase.purchaseProd.prodNo }" />주문취소</div></c:if>
 			  	<c:if test="${! empty purchase.tranCode && purchase.tranCode=='100' }">
-			  		<div id="ship"><input type="hidden"  value="${purchase.purchaseProd.prodNo }" />배송하기</div></c:if>
+			  		<div class="ship"><input type="hidden"  value="${purchase.purchaseProd.prodNo }" />배송하기</div></c:if>
 			  </td>
 			 <td align="left">
 			  	<i class="glyphicon glyphicon-search" id= "${purchase.tranNo}"></i>

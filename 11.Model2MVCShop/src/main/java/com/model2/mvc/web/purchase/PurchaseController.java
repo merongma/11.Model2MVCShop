@@ -61,12 +61,15 @@ public class PurchaseController {
 	int pageSize;
 
 	@RequestMapping(value = "addPurchaseView", method = RequestMethod.GET)
-	public String addPurchaseView(@RequestParam("prodNo") int prodNo, Model model) throws Exception {
+	public String addPurchaseView(@RequestParam("prodNo") int prodNo, @RequestParam("quantity") int quantity,
+			Model model) throws Exception {
 
 		System.out.println("/purchase/addPurchaseView : GET");
+		System.out.println("quantity?"+quantity);
 
 		Product product = productService.getProduct(prodNo);
-
+		
+		model.addAttribute("quantity",quantity);
 		model.addAttribute("product", product);
 
 		System.out.println(product);
@@ -93,6 +96,7 @@ public class PurchaseController {
 		purchaseService.addPurchase(purchase);
 
 		purchase.setPaymentOption(purchase.getPaymentOption().trim());
+		System.out.println(purchase.getPaymentOption());
 
 		return "forward:/purchase/getPurchaseView.jsp";
 	}
@@ -106,7 +110,8 @@ public class PurchaseController {
 
 		model.addAttribute("purchase", purchase);
 
-		purchase.setPaymentOption(purchase.getPaymentOption().trim());
+		//purchase.setPaymentOption(purchase.getPaymentOption().trim());
+		System.out.println("주문일 : "+purchase.getOrderDate());
 
 		return "forward:/purchase/getPurchaseView.jsp";
 
@@ -220,7 +225,7 @@ public class PurchaseController {
 
 		purchase = purchaseService.getPurchase(tranNo);
 		int prodNo = purchase.getPurchaseProd().getProdNo();
-		System.out.println("prodNo값 확인 : "+prodNo);
+		System.out.println("prodNo값 확인 : " + prodNo);
 
 		product.setProdNo(purchase.getPurchaseProd().getProdNo());
 
@@ -228,7 +233,7 @@ public class PurchaseController {
 		purchase.setPurchaseProd(product);
 
 		purchaseService.updateTranCode(purchase);
-		
+
 		if (tranCode.equals("400")) {
 
 			System.out.println("여기 들어오나욤?");

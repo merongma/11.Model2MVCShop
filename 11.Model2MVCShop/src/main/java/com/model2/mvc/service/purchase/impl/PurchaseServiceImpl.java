@@ -40,8 +40,16 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	@Override
-	public Purchase getPurchase2(int ProdNo) throws Exception {
-		return purchaseDao.getPurchase2(ProdNo);
+	public Purchase getPurchase2(int prodNo) throws Exception {
+		return purchaseDao.getPurchase2(prodNo);
+	}
+
+	@Override
+	public Map<String, Object> getPurchase3(Purchase purchase, String buyerId) throws Exception {
+
+		Map<String, Object> map = purchaseDao.getPurchase3(purchase, buyerId);
+
+		return map;
 	}
 
 	@Override

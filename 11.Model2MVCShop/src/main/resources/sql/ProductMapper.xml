@@ -64,8 +64,8 @@
 	<!-- SQL : SELECT LIST -->
 	<select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">
 	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT p.prod_no, p.prod_name, p.price, p.reg_date, p.manufacture_day,p.image_file, t.tran_status_code,p.prod_detail,p.stock
+	  	FROM (	SELECT  inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT  distinct p.prod_no, p.prod_name, p.price, p.reg_date, p.manufacture_day,p.image_file, t.tran_status_code,p.prod_detail,p.stock
 											FROM product p, transaction t
 											<where>
 												 p.prod_no= t.prod_no(+)

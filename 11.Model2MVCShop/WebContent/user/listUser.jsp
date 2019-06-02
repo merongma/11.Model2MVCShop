@@ -54,10 +54,11 @@
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button.btn btn-default" ).on("click" , function() {
-			//alert($("#searchKeyword").val());
-			//alert( $( "button.btn.btn-default" ).html())
-			 fncGetUserList(1);
+			 $( "button.btn.btn-default" ).on("click" , function() {
+// 			alert("버튼클릭");
+// 			alert($("#searchKeyword").val());
+// 			alert( $( "button.btn.btn-default" ).html())
+			 fncGetList(1);
 			});
 		 });
 		
@@ -94,7 +95,8 @@
 									"Content-Type" : "application/json"
 								},
 								success : function(JSONData , status) {
-
+									//alert(JSONData)
+									//alert(status)
 									var displayValue = "<h6>"
 																+"아이디 : "+JSONData.userId+"<br/>"
 																+"이  름 : "+JSONData.userName+"<br/>"
@@ -105,17 +107,15 @@
 									$("h6").remove();
 									$( "#"+userId+"" ).html(displayValue);
 								}
+		
 						});
 						////////////////////////////////////////////////////////////////////////////////////////////
 					
 			});
-			
-			//==> userId LINK Event End User 에게 보일수 있도록 
-			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "green");
-			$("h7").css("color" , "green");
-			
-			//==> 아래와 같이 정의한 이유는 ??
-			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
+			$("td:nth-child(5)").on("click",function(){
+				//alert("제발...")
+				$("h6").hide();
+			});
 		});	
 	
 	</script>
@@ -170,7 +170,7 @@
 	    	</div>
 	    	
 		</div>
-		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
+		<!-- table 위쪽 검색 end /////////////////////////////////////-->
 		
 		
       <!--  table Start /////////////////////////////////////-->
@@ -193,7 +193,7 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
+			  <td align="left" >${user.userId}</td>
 			  <td align="left">${user.userName}</td>
 			  <td align="left">${user.email}</td>
 			  <td align="left">
