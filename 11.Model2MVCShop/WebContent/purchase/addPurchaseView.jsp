@@ -131,7 +131,7 @@ $( function() {
 		 <div class="form-group">
 		    <label for="quantity" class="col-sm-offset-1 col-sm-3 control-label">수량</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="quantity" name="quantity" placeholder="수량">
+		      <input type="text" class="form-control" id="quantity" name="quantity" value="${quantity }" readonly>
 		    </div>
 		  </div>
 		  

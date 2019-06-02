@@ -61,12 +61,15 @@ public class PurchaseController {
 	int pageSize;
 
 	@RequestMapping(value = "addPurchaseView", method = RequestMethod.GET)
-	public String addPurchaseView(@RequestParam("prodNo") int prodNo, Model model) throws Exception {
+	public String addPurchaseView(@RequestParam("prodNo") int prodNo, @RequestParam("quantity") int quantity,
+			Model model) throws Exception {
 
 		System.out.println("/purchase/addPurchaseView : GET");
+		System.out.println("quantity?"+quantity);
 
 		Product product = productService.getProduct(prodNo);
-
+		
+		model.addAttribute("quantity",quantity);
 		model.addAttribute("product", product);
 
 		System.out.println(product);
@@ -93,6 +96,7 @@ public class PurchaseController {
 		purchaseService.addPurchase(purchase);
 
 		purchase.setPaymentOption(purchase.getPaymentOption().trim());
+		System.out.println(purchase.getPaymentOption());
 
 		return "forward:/purchase/getPurchaseView.jsp";
 	}
@@ -106,14 +110,16 @@ public class PurchaseController {
 
 		model.addAttribute("purchase", purchase);
 
-		purchase.setPaymentOption(purchase.getPaymentOption().trim());
+		//purchase.setPaymentOption(purchase.getPaymentOption().trim());
+		System.out.println("¡÷πÆ¿œ : "+purchase.getOrderDate());
 
 		return "forward:/purchase/getPurchaseView.jsp";
 
 	}
 
 	@RequestMapping(value = "listPurchase")
-	public String listPurchase(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+	public String listPurchase(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
+			throws Exception {
 
 		System.out.println("/purchase/listPurchase : GET / POST");
 
@@ -125,7 +131,7 @@ public class PurchaseController {
 		User user = (User) request.getSession().getAttribute("user");
 		String buyerId = user.getUserId();
 		// System.out.println("session buyerid : " + buyerId);
-		
+
 		Map<String, Object> map = purchaseService.getPurchaseList(search, buyerId);
 
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,

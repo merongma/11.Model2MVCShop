@@ -95,7 +95,8 @@
 									"Content-Type" : "application/json"
 								},
 								success : function(JSONData , status) {
-
+									//alert(JSONData)
+									//alert(status)
 									var displayValue = "<h6>"
 																+"아이디 : "+JSONData.userId+"<br/>"
 																+"이  름 : "+JSONData.userName+"<br/>"
@@ -106,9 +107,14 @@
 									$("h6").remove();
 									$( "#"+userId+"" ).html(displayValue);
 								}
+		
 						});
 						////////////////////////////////////////////////////////////////////////////////////////////
 					
+			});
+			$("td:nth-child(5)").on("click",function(){
+				//alert("제발...")
+				$("h6").hide();
 			});
 		});	
 	
@@ -187,7 +193,7 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
+			  <td align="left" >${user.userId}</td>
 			  <td align="left">${user.userName}</td>
 			  <td align="left">${user.email}</td>
 			  <td align="left">

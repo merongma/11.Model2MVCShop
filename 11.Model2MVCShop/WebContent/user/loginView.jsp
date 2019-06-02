@@ -21,9 +21,32 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
     	 body >  div.container{ 
-        	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+      .login {
+    color:#6b9658;
+}
+.login:hover {
+    color:#557846;
+}
+      .add {
+    color:#6b9658;
+}
+.add:hover {
+    color:#557846;
+}
+.jumbotron{
+background-color: white;}
+
+.col-md-6 img{
+    width: 580px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 400px;
+    border-left-width: 100px;
+    padding-left: 30px;
+
+}
     </style>
     
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -35,7 +58,7 @@
 			$("#userId").focus();
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("button").on("click" , function() {
+			$(".login").on("click" , function() {
 				var id=$("input:text").val();
 				var pw=$("input:password").val();
 				
@@ -84,7 +107,7 @@
 		<div class="row">
 		
 			<div class="col-md-6">
-					<img src="/images/logo-spring.png" class="img-rounded" width="100%" />
+					<img src="/images/newnew.jpg" />
 			</div>
 	   	 	
 	 	 	<div class="col-md-6">
@@ -97,7 +120,7 @@
 			        <form class="form-horizontal">
 		  
 					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">I &nbsp;D </label>
+					    <label for="userId" class="col-sm-4 control-label">MEMBER ID </label>
 					    <div class="col-sm-6">
 					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="ID" >
 					    </div>
@@ -112,8 +135,9 @@
 					  
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <button type="button" class="btn btn-success"  >로 &nbsp;그 &nbsp;인</button>
-					      <a class="btn btn-success btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
+					      <a class="login"  >로 &nbsp;그 &nbsp;인</a>
+					      &nbsp;&nbsp;&nbsp;&nbsp;
+					      <a class="add" href="#" >회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 					    </div>
 					  </div>
 			

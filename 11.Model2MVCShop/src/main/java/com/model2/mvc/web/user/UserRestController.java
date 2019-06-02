@@ -102,6 +102,8 @@ public class UserRestController {
 		map.put("result", result);
 		map.put("userId", user.getUserId());
 
+		System.out.println("map°ª È®ÀÎ : " + map);
+
 		return map;
 	}
 

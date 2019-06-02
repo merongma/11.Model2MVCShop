@@ -83,7 +83,7 @@ $(function() {
 
 				var displayValue = "<h6>" + 
 				"제품번호 : "+JSONData.purchaseProd.prodNo + "<br/>" +
-				"수령인 : "+JSONData.purchaseProd.receiverName + "<br/>" +
+				"수령인 : "+JSONData.receiverName + "<br/>" +
 				"연락처 : "+ JSONData.receiverPhone + "<br/>" +
 				"배송지 : "+ JSONData.divyAddr + "<br/>" +
 				"배송메모: "+ JSONData.divyRequest + "<br/>" +

@@ -33,18 +33,16 @@
 	              <!--  회원관리 DrowDown -->
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >회원관리</span>
+	                         <span >my account</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
-	                         <li><a href="#">개인정보조회</a></li>
+	                         <li><a href="#">내 정보 수정</a></li>
 	                         
-	                         <c:if test="${sessionScope.user.role == 'admin'}">
-	                         	<li><a href="#">회원정보조회</a></li>
+	                         <c:if test="${sessionScope.user.role == 'user'}">
+	                           <li><a href="#">구매 이력 조회</a></li>
 	                         </c:if>
 	                         
-	                         <li class="divider"></li>
-	                         <li><a href="#">etc...</a></li>
 	                     </ul>
 	                 </li>
 	                 
@@ -52,15 +50,16 @@
 	               <c:if test="${sessionScope.user.role == 'admin'}">
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >상품관리</span>
+		                         <span >administer</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
-		                         <li><a href="#">판매상품등록</a></li>
-		                         <li><a href="#">판매상품관리</a></li>
-		                         <li><a href="#">배송관리</a></li>
-		                         <li class="divider"></li>
-		                         <li><a href="#">etc..</a></li>
+		                    	  <li><a href="#">회원 정보 조회</a></li>
+		                         <li><a href="#">판매 상품 등록</a></li>
+		                         <li><a href="#">판매 상품 관리</a></li>
+		                         <li><a href="#">배송 관리</a></li>
+		                        
+		                         <li></li>
 		                     </ul>
 		                </li>
 	                 </c:if>
@@ -68,28 +67,21 @@
 	              <!-- 구매관리 DrowDown -->
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >상품구매</span>
+	                         <span >shop</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
 	                         <li><a href="#">상 품 검 색</a></li>
-
-	                         <c:if test="${sessionScope.user.role == 'user'}">
-	                           <li><a href="#">구매이력조회</a></li>
-	                         </c:if>
-	                         
 	                         <li><a href="#">신상품보기</a></li>
 	                         <li><a href="#">최근본상품</a></li>
-	                         <li class="divider"></li>
-	                         <li><a href="#">etc..</a></li>
 	                     </ul>
 	                 </li>
 	                 
-	                 <li><a href="#">etc...</a></li>
+	                 <li></li>
 	             </ul>
 	             
 	             <ul class="nav navbar-nav navbar-right">
-	                <li><a href="#">로그아웃</a></li>
+	                <li><a href="#">Logout</a></li>
 	            </ul>
 		</div>
 		<!-- dropdown hover END -->	       
@@ -105,7 +97,7 @@
 		//============= logout Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('로그아웃')").on("click" , function() {
+		 	$("a:contains('Logout')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
@@ -114,14 +106,14 @@
 		//============= 회원정보조회 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('회원정보조회')").on("click" , function() {
+		 	$("a:contains('회원 정보 조회')").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
 				self.location = "/user/listUser"
 			}); 
 		 });
 		
 		//=============  개인정보조회회 Event  처리 =============	
-	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
+	 	$( "a:contains('내 정보 수정')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
@@ -129,20 +121,20 @@
 	 	//============= 판매상품등록 Event  처리 =============	
 	 	 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $("a:contains('판매상품등록')").on("click" , function() {
+			 $("a:contains('판매 상품 등록')").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
 				self.location = "/product/addProduct"
 			}); 
 		});
 	 	
 	 	//=============  판매상품관리 Event  처리 =============	
-		 $( "a:contains('판매상품관리')" ).on("click" , function() {
+		 $( "a:contains('판매 상품 관리')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	 		$(self.location).attr("href","/product/listProduct?menu=manage");
 		});
 
 		 	//=============  배송관리 Event  처리 =============	
-		 $( "a:contains('배송관리')" ).on("click" , function() {
+		 $( "a:contains('배송 관리')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 self.location = "/purchase/shippingList?menu=manage"
 		});
@@ -154,7 +146,7 @@
 		});
 		 
 		 //============= 구매이력조회 Event  처리 =============	
-		 $( "a:contains('구매이력조회')" ).on("click" , function() {
+		 $( "a:contains('구매 이력 조회')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	 		$(self.location).attr("href","/purchase/listPurchase");
 		});
@@ -168,9 +160,13 @@
 		 //============= 최근본상품 Event  처리 =============	
 		 $(function() {
 		 	$( "a:contains('최근본상품')" ).on("click" , function() {
-		 		self.location = "/history.jsp"
-		 		//history();
+		 		history();
 			});
 		});
 		 
+		function history(){
+				popWin = window.open("/history.jsp",
+															"popWin",
+															"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+			}
 	</script>  
