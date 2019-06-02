@@ -72,7 +72,7 @@
 							
 							var displayValue = 
 							"<h6>"+JSONData.reviewDetail+"<br/>" +
-							"<img src=/images/uploadFiles/"+JSONData.reviewFile+"<br/>"
+							"<img src=/images/uploadFiles/"+JSONData.reviewFile+"/><br/>"
 							+"</h6>";
 							$("h6").remove();
 							$( "#"+reviewNo+"" ).html(displayValue);
