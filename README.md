@@ -32,6 +32,6 @@
 
 # 3. 화면구성
 
-![shop](./resources/shop.png)
+![shop](./11.Model2MVCShop/WebContent/images/shop.png)
 
 
