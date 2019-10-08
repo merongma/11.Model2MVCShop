@@ -1,22 +1,21 @@
-# 쇼핑몰
+# * 쇼핑몰
 
-# phoenix
 
-회원관리, 상품관리, 구매관리, 배송관리, 재고관리, 리뷰관리 등 쇼핑몰의 전반적인 기능을 제공하는 시스템
+• 회원관리, 상품관리, 구매관리, 배송관리, 재고관리, 리뷰관리 등 쇼핑몰의 전반적인 기능을 제공하는 시스템
 
 # 1. 사용기술
 
-•Language : JAVA 1.8, JSP, HTML5, CSS3, JavaScript
+• Language : JAVA 1.8, JSP, HTML5, CSS3, JavaScript
 
-•Database : oracle 11g
+• Database : oracle 11g
 
-•Web Server : Apache Tomcat 9.0.21
+• Web Server : Apache Tomcat 9.0.21
 
-•Framwork : Spring 4.0.9, JDBC, jQuery, BootStrap, JUnit4, Log4jdbc, Aspectj, JSON-simple, Jackson, MyBatis 3.2.1
+• Framwork : Spring 4.0.9, JDBC, jQuery, BootStrap, JUnit4, Log4jdbc, Aspectj, JSON-simple, Jackson, MyBatis 3.2.1
 
-•Etc : AJAX
+• Etc : AJAX
 
-•Tool : eclipse, Oracle SQL Developer, GitHub
+• Tool : eclipse, Oracle SQL Developer, GitHub
 
 # 2. 기능
 
